@@ -81,17 +81,22 @@ export function Footer(): React.JSX.Element {
           <p>
             &copy; {currentYear} {hospitalName}. All rights reserved.
           </p>
-          {hospitalInfo?.facebookUrl && (
-            <a
-              href={hospitalInfo.facebookUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`${hospitalName} on Facebook`}
-              className="rounded-full bg-primary-800 p-2 hover:bg-primary-700"
-            >
-              <Facebook className="h-4 w-4" aria-hidden="true" />
-            </a>
-          )}
+          <div className="flex items-center gap-4">
+            <Link to="/admin/login" className="text-xs text-primary-300 hover:text-white">
+              Staff Login
+            </Link>
+            {hospitalInfo?.facebookUrl && (
+              <a
+                href={hospitalInfo.facebookUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${hospitalName} on Facebook`}
+                className="rounded-full bg-primary-800 p-2 hover:bg-primary-700"
+              >
+                <Facebook className="h-4 w-4" aria-hidden="true" />
+              </a>
+            )}
+          </div>
         </Container>
       </div>
     </footer>

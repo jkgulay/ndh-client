@@ -1,10 +1,10 @@
 import { CheckCircle2 } from "lucide-react";
 import { useContactForm } from "../../hooks/useContactForm";
-
-const INPUT_CLASSES =
-  "w-full rounded-lg border border-slate-300 px-4 py-2.5 text-slate-800 focus:border-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-200";
-const LABEL_CLASSES = "mb-1.5 block text-sm font-medium text-slate-700";
-const ERROR_CLASSES = "mt-1 text-sm text-red-600";
+import {
+  FORM_ERROR_CLASSES as ERROR_CLASSES,
+  FORM_INPUT_CLASSES as INPUT_CLASSES,
+  FORM_LABEL_CLASSES as LABEL_CLASSES,
+} from "../common/formStyles";
 
 export function ContactForm(): React.JSX.Element {
   const { values, fieldErrors, status, serverError, handleChange, handleSubmit } = useContactForm();
