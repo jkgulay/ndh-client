@@ -13,7 +13,7 @@ export function MobileDrawer({ isOpen, onClose, emergencyHotline }: MobileDrawer
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col bg-white sm:hidden" role="dialog" aria-modal="true">
+    <div className="fixed inset-0 z-50 flex flex-col bg-white lg:hidden" role="dialog" aria-modal="true">
       <div className="flex items-center justify-between border-b border-slate-200 px-4 py-4">
         <span className="text-lg font-bold text-primary-800">Menu</span>
         <button
