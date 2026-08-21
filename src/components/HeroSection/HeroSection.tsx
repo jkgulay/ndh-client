@@ -7,6 +7,9 @@ import type { TranslationKey } from "../../i18n/LanguageContext";
 import { useScrollReveal } from "../../hooks/useScrollReveal";
 import { useCountUp } from "../../hooks/useCountUp";
 import { useParallax } from "../../hooks/useParallax";
+import { RotatingText } from "../common/RotatingText";
+import { SERVICE_CATEGORIES } from "../../types/service.types";
+import { getServiceCategoryIcon } from "../../utils/serviceCategoryIcon";
 
 interface HeroSectionProps {
   hospitalName: string;
@@ -19,6 +22,11 @@ const STATS: readonly (readonly [string, TranslationKey])[] = [
   ["12", "hero.statDepartments"],
   ["24/7", "hero.statEmergencySupport"],
 ];
+
+const CATEGORY_ITEMS = SERVICE_CATEGORIES.map((category) => ({
+  icon: getServiceCategoryIcon(category),
+  label: category,
+}));
 
 function HeroWord({ children, className = "" }: { children: string; className?: string }): React.JSX.Element {
   return (
@@ -93,7 +101,10 @@ export function HeroSection({ hospitalName, tagline }: HeroSectionProps): React.
             </span>
           </h1>
           <p className="hero-reveal mt-6 max-w-lg text-base leading-7 text-slate-500 sm:text-lg">{tagline}. {t("hero.taglineSuffix")}</p>
-          <div className="hero-reveal mt-9 flex flex-wrap items-center gap-4">
+          <p className="hero-reveal mt-5 flex flex-wrap items-center gap-2 text-sm font-bold text-slate-500">
+            {t("hero.rotatingLabel")} <RotatingText items={CATEGORY_ITEMS} />
+          </p>
+          <div className="hero-reveal mt-8 flex flex-wrap items-center gap-4">
             <Link
               to="/services"
               className="inline-flex items-center justify-center gap-2 rounded-full bg-primary-800 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-primary-900/20 transition hover:-translate-y-0.5 hover:bg-primary-900"

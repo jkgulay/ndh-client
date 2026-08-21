@@ -42,6 +42,7 @@ const en = {
     headlineWord3: "Every",
     headlineWord4: "time.",
     taglineSuffix: "Compassionate care, advanced facilities, and a team that puts your wellbeing first.",
+    rotatingLabel: "Every department, ready for you:",
     exploreServices: "Explore services",
     trustedProfessionals: "Trusted professionals",
     open247: "Open 24/7 for emergencies",
@@ -241,6 +242,7 @@ const fil: typeof en = {
     headlineWord4: "pagkakataon.",
     taglineSuffix:
       "Mapagmalasakit na pangangalaga, makabagong pasilidad, at isang koponang inuuna ang inyong kapakanan.",
+    rotatingLabel: "Bawat departamento, handang tumulong:",
     exploreServices: "Tuklasin ang mga serbisyo",
     trustedProfessionals: "Pinagkakatiwalaang mga propesyonal",
     open247: "Bukas 24/7 para sa emergency",
