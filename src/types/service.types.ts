@@ -19,6 +19,7 @@ export interface Service {
   description: string;
   category: ServiceCategory;
   operatingHours?: string;
+  imageUrl?: string;
   isActive: boolean;
   createdAt: string;
 }

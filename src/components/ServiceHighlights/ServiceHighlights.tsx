@@ -6,18 +6,33 @@ import { LoadingState } from "../common/LoadingState";
 import { ErrorState } from "../common/ErrorState";
 import { WaveDivider } from "../common/WaveDivider";
 import { DotPattern } from "../common/DotPattern";
+import { AccordionGallery } from "../common/AccordionGallery";
+import type { AccordionGalleryItem } from "../common/AccordionGallery";
 import { useServices } from "../../hooks/useServices";
 import { useLanguage } from "../../i18n/LanguageContext";
 import { useScrollReveal } from "../../hooks/useScrollReveal";
-import { getServiceCategoryIcon } from "../../utils/serviceCategoryIcon";
 
 const FEATURED_SERVICE_COUNT = 6;
+const DESCRIPTION_PREVIEW_LENGTH = 90;
+const FALLBACK_IMAGE_URL = "https://placehold.co/900x1200?text=Service";
+
+function toPreview(description: string): string {
+  if (description.length <= DESCRIPTION_PREVIEW_LENGTH) return description;
+  return `${description.slice(0, DESCRIPTION_PREVIEW_LENGTH).trimEnd()}…`;
+}
 
 export function ServiceHighlights(): React.JSX.Element {
   const { services, isLoading, error } = useServices();
   const featuredServices = (services ?? []).slice(0, FEATURED_SERVICE_COUNT);
   const containerRef = useScrollReveal<HTMLDivElement>(".reveal-item", [isLoading, error]);
   const { t } = useLanguage();
+
+  const galleryItems: AccordionGalleryItem[] = featuredServices.map((service) => ({
+    image: service.imageUrl || FALLBACK_IMAGE_URL,
+    label: service.name,
+    description: toPreview(service.description),
+    alt: service.name,
+  }));
 
   return (
     <section className="relative overflow-hidden bg-surface-tint py-16 sm:py-24">
@@ -30,26 +45,29 @@ export function ServiceHighlights(): React.JSX.Element {
             description={t("serviceHighlights.description")}
           />
 
-          <div className="mt-10">
+          <div className="reveal-item mt-10">
             {isLoading && <LoadingState label={t("serviceHighlights.loading")} />}
             {error && !isLoading && <ErrorState message={error} />}
             {!isLoading && !error && (
-              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {featuredServices.map((service) => {
-                  const CategoryIcon = getServiceCategoryIcon(service.category);
-                  return (
-                    <div key={service._id} className="group reveal-item overflow-hidden rounded-3xl bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-                      <div className="flex h-28 items-center justify-center bg-primary-50">
-                        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white text-primary-700 shadow-sm transition duration-300 group-hover:-rotate-6 group-hover:scale-110"><CategoryIcon className="h-6 w-6" aria-hidden="true" /></div>
-                      </div>
-                      <div className="p-6">
-                        <h3 className="font-serif text-lg font-medium text-primary-900">{service.name}</h3>
-                        <p className="mt-2 text-sm leading-6 text-slate-500">{service.description}</p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
+              <AccordionGallery
+                items={galleryItems}
+                defaultIndex={0}
+                trigger="hover"
+                accentColor="#4a99a2"
+                overlayColor="#0b1a1c"
+                textColor="#ffffff"
+                grayscale
+                showLabels
+                duration={0.6}
+                ease="power3.out"
+                parallax={0.4}
+                tilt={6}
+                stagger={0.06}
+                height={420}
+                gap={10}
+                radius={24}
+                orientation="horizontal"
+              />
             )}
           </div>
 
