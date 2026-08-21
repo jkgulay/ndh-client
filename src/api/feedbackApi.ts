@@ -1,4 +1,5 @@
 import axios from "axios";
+import { adminHttpClient } from "./adminHttpClient";
 import { httpClient } from "./httpClient";
 import type { ApiResponse } from "../types/common.types";
 import type { Feedback, FeedbackFormValues } from "../types/feedback.types";
@@ -13,4 +14,14 @@ export async function submitFeedback(values: FeedbackFormValues): Promise<ApiRes
     }
     throw error;
   }
+}
+
+export async function fetchAllFeedbackForAdmin(): Promise<ApiResponse<Feedback[]>> {
+  const { data } = await adminHttpClient.get<ApiResponse<Feedback[]>>("/feedback/admin");
+  return data;
+}
+
+export async function deleteFeedback(id: string): Promise<ApiResponse<never>> {
+  const { data } = await adminHttpClient.delete<ApiResponse<never>>(`/feedback/${id}`);
+  return data;
 }

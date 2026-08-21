@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Bell, Briefcase, SlidersHorizontal, Stethoscope, UserRound } from "lucide-react";
+import { Bell, Briefcase, SlidersHorizontal, Star, Stethoscope, UserRound } from "lucide-react";
 
 const DASHBOARD_SECTIONS = [
   {
@@ -25,6 +25,12 @@ const DASHBOARD_SECTIONS = [
     label: "Careers",
     description: "Open and close job postings.",
     icon: Briefcase,
+  },
+  {
+    path: "/admin/feedback",
+    label: "Feedback",
+    description: "Review patient ratings and comments.",
+    icon: Star,
   },
   {
     path: "/admin/settings",

@@ -1,4 +1,4 @@
-import { ArrowRight, CalendarCheck, ChevronRight, Clock3, Maximize2, MapPin, ShieldCheck } from "lucide-react";
+import { ChevronRight, Clock3, Maximize2, MapPin, ShieldCheck } from "lucide-react";
 import gsap from "gsap";
 import { useLayoutEffect, useRef } from "react";
 import { Link } from "react-router-dom";
@@ -16,6 +16,14 @@ const STATS = [
   ["24/7", "Emergency support"],
 ] as const;
 
+function HeroWord({ children, className = "" }: { children: string; className?: string }): React.JSX.Element {
+  return (
+    <span className={`inline-block overflow-hidden pb-2 align-bottom sm:pb-3 ${className}`}>
+      <span className="hero-word inline-block">{children}</span>
+    </span>
+  );
+}
+
 export function HeroSection({ hospitalName, tagline }: HeroSectionProps): React.JSX.Element {
   const sectionRef = useRef<HTMLElement>(null);
   const belowFoldRef = useScrollReveal<HTMLDivElement>();
@@ -23,8 +31,11 @@ export function HeroSection({ hospitalName, tagline }: HeroSectionProps): React.
   useLayoutEffect(() => {
     const context = gsap.context(() => {
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-      gsap.from(".hero-reveal", { y: 28, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power3.out" });
-      gsap.from(".hero-photo", { scale: 1.08, opacity: 0, duration: 1.2, ease: "power3.out" });
+      const timeline = gsap.timeline();
+      timeline
+        .from(".hero-word", { yPercent: 120, opacity: 0, duration: 0.9, ease: "power4.out", stagger: 0.07 })
+        .from(".hero-reveal", { y: 28, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power3.out" }, "-=0.55")
+        .from(".hero-photo", { scale: 1.08, opacity: 0, duration: 1.2, ease: "power3.out" }, "-=0.9");
     }, sectionRef);
     return () => context.revert();
   }, []);
@@ -36,22 +47,17 @@ export function HeroSection({ hospitalName, tagline }: HeroSectionProps): React.
           <p className="hero-reveal mb-5 flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.2em] text-accent-600">
             <span className="h-2 w-2 rounded-full bg-accent-500" /> Welcome to {hospitalName}
           </p>
-          <h1 className="hero-reveal max-w-xl text-5xl font-bold leading-[0.98] text-primary-950 sm:text-6xl lg:text-7xl">
-            Expert care.
-            <span className="block text-accent-500">Every time.</span>
+          <h1 className="max-w-xl text-5xl font-bold leading-[0.98] text-primary-950 sm:text-6xl lg:text-7xl">
+            <HeroWord>Expert</HeroWord> <HeroWord>care.</HeroWord>
+            <span className="block text-accent-500">
+              <HeroWord>Every</HeroWord> <HeroWord>time.</HeroWord>
+            </span>
           </h1>
           <p className="hero-reveal mt-6 max-w-lg text-base leading-7 text-slate-600 sm:text-lg">{tagline}. Compassionate care, advanced facilities, and a team that puts your wellbeing first.</p>
-          <div className="hero-reveal mt-8 flex flex-col gap-3 sm:flex-row">
-          <Link
-            to="/contact"
-            className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary-700 px-5 py-3.5 text-sm font-extrabold text-white shadow-lg shadow-primary-700/20 transition hover:-translate-y-0.5 hover:bg-primary-800"
-          >
-            <CalendarCheck className="h-4 w-4" aria-hidden="true" /> Book an appointment
-            <ArrowRight className="h-4 w-4" aria-hidden="true" />
-          </Link>
+          <div className="hero-reveal mt-8">
           <Link
             to="/services"
-            className="inline-flex items-center justify-center gap-2 rounded-lg border border-primary-200 bg-white px-5 py-3.5 text-sm font-extrabold text-primary-800 transition hover:border-primary-400"
+            className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary-700 px-5 py-3.5 text-sm font-extrabold text-white shadow-lg shadow-primary-700/20 transition hover:-translate-y-0.5 hover:bg-primary-800"
           >
             Explore services <ChevronRight className="h-4 w-4" aria-hidden="true" />
           </Link>

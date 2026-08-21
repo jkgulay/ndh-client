@@ -17,6 +17,7 @@ import { AdminAccountPage } from "./pages/admin/account/AdminAccountPage";
 import { AdminAnnouncementsPage } from "./pages/admin/announcements/AdminAnnouncementsPage";
 import { AdminCareersPage } from "./pages/admin/careers/AdminCareersPage";
 import { AdminDoctorsPage } from "./pages/admin/doctors/AdminDoctorsPage";
+import { AdminFeedbackPage } from "./pages/admin/feedback/AdminFeedbackPage";
 import { AdminServicesPage } from "./pages/admin/services/AdminServicesPage";
 import { AdminSettingsPage } from "./pages/admin/settings/AdminSettingsPage";
 
@@ -43,6 +44,7 @@ export function App(): React.JSX.Element {
           <Route path="/admin/doctors" element={<AdminDoctorsPage />} />
           <Route path="/admin/services" element={<AdminServicesPage />} />
           <Route path="/admin/careers" element={<AdminCareersPage />} />
+          <Route path="/admin/feedback" element={<AdminFeedbackPage />} />
           <Route path="/admin/settings" element={<AdminSettingsPage />} />
           <Route path="/admin/account" element={<AdminAccountPage />} />
         </Route>

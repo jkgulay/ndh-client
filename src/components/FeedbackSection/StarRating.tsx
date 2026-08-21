@@ -48,3 +48,21 @@ export function StarRating({ value, onChange }: StarRatingProps): React.JSX.Elem
     </div>
   );
 }
+
+interface StarRatingDisplayProps {
+  rating: number;
+}
+
+export function StarRatingDisplay({ rating }: StarRatingDisplayProps): React.JSX.Element {
+  return (
+    <div className="flex items-center gap-0.5" aria-label={`${rating} out of 5 stars`}>
+      {RATING_VALUES.map((star) => (
+        <Star
+          key={star}
+          className={`h-4 w-4 ${star <= rating ? "fill-amber-400 text-amber-400" : "fill-transparent text-slate-300"}`}
+          aria-hidden="true"
+        />
+      ))}
+    </div>
+  );
+}

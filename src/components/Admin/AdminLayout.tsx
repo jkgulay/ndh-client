@@ -8,6 +8,7 @@ const ADMIN_NAV_LINKS = [
   { path: "/admin/doctors", label: "Doctors" },
   { path: "/admin/services", label: "Services" },
   { path: "/admin/careers", label: "Careers" },
+  { path: "/admin/feedback", label: "Feedback" },
   { path: "/admin/settings", label: "Hospital Info" },
   { path: "/admin/account", label: "Account" },
 ] as const;
