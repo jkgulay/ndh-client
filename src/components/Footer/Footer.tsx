@@ -6,7 +6,7 @@ import { useServices } from "../../hooks/useServices";
 import { Container } from "../common/Container";
 
 const FOOTER_SERVICE_COUNT = 5;
-const FALLBACK_HOSPITAL_NAME = "Northgate District Hospital";
+const FALLBACK_HOSPITAL_NAME = "Nasipit District Hospital";
 const FALLBACK_TAGLINE = "Caring for our community since 1978";
 
 export function Footer(): React.JSX.Element {

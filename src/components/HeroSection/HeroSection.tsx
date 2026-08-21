@@ -1,4 +1,4 @@
-import { ArrowRight, CalendarCheck, ChevronRight, Clock3, MapPin, ShieldCheck } from "lucide-react";
+import { ArrowRight, CalendarCheck, ChevronRight, Clock3, HeartPulse, MapPin, ShieldCheck, Stethoscope } from "lucide-react";
 import gsap from "gsap";
 import { useLayoutEffect, useRef } from "react";
 import { Link } from "react-router-dom";
@@ -53,7 +53,7 @@ export function HeroSection({ hospitalName, tagline }: HeroSectionProps): React.
           </div>
         </div>
         <div className="hero-photo relative min-h-[360px] overflow-hidden rounded-[2rem] bg-primary-200 shadow-2xl shadow-primary-900/15 sm:min-h-[480px]">
-          <img src="https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=1400&q=85" alt="Modern hospital building" className="absolute inset-0 h-full w-full object-cover" />
+          <img src="/components/images%20(2).jpg" alt="Nasipit District Hospital staff and facility" className="absolute inset-0 h-full w-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-tr from-primary-950/70 via-primary-900/10 to-transparent" />
           <div className="hero-reveal absolute bottom-5 left-5 right-5 flex items-center justify-between rounded-2xl border border-white/20 bg-white/90 p-4 shadow-xl backdrop-blur sm:bottom-7 sm:left-7 sm:right-7">
             <div><p className="text-xs font-bold uppercase tracking-wider text-cyan-600">Your health, our priority</p><p className="mt-1 text-sm font-extrabold text-primary-950">Care that feels personal</p></div>
@@ -65,6 +65,22 @@ export function HeroSection({ hospitalName, tagline }: HeroSectionProps): React.
         <div className="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-primary-100 px-4 sm:grid-cols-4 sm:px-6 lg:px-8">
           {[['25+', 'Years of care'], ['50+', 'Expert doctors'], ['12', 'Departments'], ['24/7', 'Emergency support']].map(([value, label]) => <div key={label} className="px-3 py-5 text-center sm:py-6"><p className="text-xl font-extrabold text-primary-800 sm:text-2xl">{value}</p><p className="mt-1 text-[10px] font-bold uppercase tracking-wider text-slate-500 sm:text-xs">{label}</p></div>)}
         </div>
+      </div>
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-3 px-4 py-5 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-8">
+        {[
+          [Stethoscope, "Expert doctors", "Experienced professionals who listen first."],
+          [HeartPulse, "Advanced care", "Modern facilities for confident treatment."],
+          [Clock3, "24/7 services", "Emergency support whenever you need it."],
+          [ShieldCheck, "Patient-first", "Thoughtful care for every family."],
+        ].map(([Icon, title, description]) => {
+          const FeatureIcon = Icon as typeof Stethoscope;
+          return (
+            <div key={title as string} className="hero-reveal flex items-start gap-3 rounded-2xl border border-primary-100 bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-50 text-primary-700"><FeatureIcon className="h-5 w-5" aria-hidden="true" /></span>
+              <div><p className="text-sm font-extrabold text-primary-900">{title as string}</p><p className="mt-1 text-xs leading-5 text-slate-500">{description as string}</p></div>
+            </div>
+          );
+        })}
       </div>
     </section>
   );

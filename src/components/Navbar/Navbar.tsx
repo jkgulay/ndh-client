@@ -7,7 +7,7 @@ import { MobileDrawer } from "./MobileDrawer";
 import { NAV_LINKS } from "./navLinks";
 
 const SCROLL_THRESHOLD_PX = 8;
-const FALLBACK_HOSPITAL_NAME = "Northgate District Hospital";
+const FALLBACK_HOSPITAL_NAME = "Nasipit District Hospital";
 const FALLBACK_EMERGENCY_HOTLINE = "0917-123-4567";
 
 export function Navbar(): React.JSX.Element {

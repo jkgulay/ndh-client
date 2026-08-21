@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-const SITE_NAME = "Northgate District Hospital";
+const SITE_NAME = "Nasipit District Hospital";
 const META_DESCRIPTION_SELECTOR = 'meta[name="description"]';
 
 export function usePageMeta(title: string, description: string): void {

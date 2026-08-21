@@ -12,7 +12,7 @@ interface Milestone {
 
 function buildMilestones(foundedYear: number): Milestone[] {
   return [
-    { year: foundedYear, event: "Northgate District Hospital opens with 30 beds and a single OPD clinic." },
+    { year: foundedYear, event: "Nasipit District Hospital opens with 30 beds and a single OPD clinic." },
     { year: foundedYear + 12, event: "Expansion adds a dedicated Emergency Department and surgical ward." },
     { year: foundedYear + 28, event: "New Radiology & Imaging wing and clinical laboratory open to the public." },
     { year: foundedYear + 40, event: "Hospital becomes PhilHealth-accredited and reaches 150-bed capacity." },
@@ -27,7 +27,7 @@ export function HistorySection({ foundedYear }: HistorySectionProps): React.JSX.
       <Container>
         <SectionHeading eyebrow="Our Story" title="History" />
         <p className="mx-auto mt-6 max-w-2xl text-center text-slate-600">
-          Founded in {foundedYear} by a small group of local physicians, Northgate District
+          Founded in {foundedYear} by a small group of local physicians, Nasipit District
           Hospital began as a modest clinic serving a handful of barangays. Over the decades, it
           has grown into a full-service district hospital, guided by the same commitment to
           accessible care that inspired its founding.
