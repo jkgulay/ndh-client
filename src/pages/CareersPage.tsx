@@ -6,6 +6,7 @@ import { PageHero } from "../components/common/PageHero";
 import { SectionHeading } from "../components/common/SectionHeading";
 import { JobCard } from "../components/JobCard/JobCard";
 import { useCareers } from "../hooks/useCareers";
+import { useLanguage } from "../i18n/LanguageContext";
 import { usePageMeta } from "../hooks/usePageMeta";
 
 const WHY_WORK_WITH_US = [
@@ -40,14 +41,15 @@ const APPLICATION_STEPS = [
 
 export function CareersPage(): React.JSX.Element {
   const { careers, isLoading, error } = useCareers();
+  const { t } = useLanguage();
   usePageMeta("Careers", "Explore open positions and learn how to apply to join our hospital team.");
 
   return (
     <>
-      <PageHero title="Careers" description="Build a career dedicated to the health and well-being of our community." />
+      <PageHero title={t("pageHeroCareers.title")} description={t("pageHeroCareers.description")} />
 
       <Container className="py-16 sm:py-20">
-        <SectionHeading eyebrow="Why Join Us" title="Why Work With Us" />
+        <SectionHeading eyebrow={t("careersPage.whyJoinEyebrow")} title={t("careersPage.whyJoinTitle")} />
         <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {WHY_WORK_WITH_US.map(({ icon: Icon, title, description }) => (
             <div key={title} className="rounded-xl border border-slate-200 bg-white p-6 text-center shadow-sm">
@@ -60,12 +62,12 @@ export function CareersPage(): React.JSX.Element {
       </Container>
 
       <Container className="pb-16 sm:pb-20">
-        <SectionHeading eyebrow="Join Our Team" title="Open Positions" />
+        <SectionHeading eyebrow={t("careersPage.openPositionsEyebrow")} title={t("careersPage.openPositionsTitle")} />
         <div className="mt-10">
-          {isLoading && <LoadingState label="Loading open positions…" />}
+          {isLoading && <LoadingState label={t("careersPage.loading")} />}
           {error && !isLoading && <ErrorState message={error} />}
           {!isLoading && !error && (careers ?? []).length === 0 && (
-            <p className="text-center text-slate-500">There are no open positions at this time.</p>
+            <p className="text-center text-slate-500">{t("careersPage.empty")}</p>
           )}
           {!isLoading && !error && (careers ?? []).length > 0 && (
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -78,7 +80,7 @@ export function CareersPage(): React.JSX.Element {
       </Container>
 
       <Container className="pb-16 sm:pb-20">
-        <SectionHeading eyebrow="Get Started" title="How to Apply" />
+        <SectionHeading eyebrow={t("careersPage.howToApplyEyebrow")} title={t("careersPage.howToApplyTitle")} />
         <ol className="mx-auto mt-10 max-w-2xl space-y-4">
           {APPLICATION_STEPS.map((step, index) => (
             <li key={step} className="flex gap-4 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">

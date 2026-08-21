@@ -1,4 +1,6 @@
 import { Search } from "lucide-react";
+import { useLanguage } from "../../i18n/LanguageContext";
+import { ALL_ROLES_OPTION } from "../../hooks/useStaffDirectory";
 
 interface StaffFiltersProps {
   searchTerm: string;
@@ -15,6 +17,8 @@ export function StaffFilters({
   selectedRole,
   onRoleChange,
 }: StaffFiltersProps): React.JSX.Element {
+  const { t } = useLanguage();
+
   return (
     <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
       <div className="relative flex-1">
@@ -23,14 +27,14 @@ export function StaffFilters({
           type="search"
           value={searchTerm}
           onChange={(event) => onSearchChange(event.target.value)}
-          placeholder="Search staff by name"
-          aria-label="Search staff by name"
+          placeholder={t("staffFilters.searchPlaceholder")}
+          aria-label={t("staffFilters.searchPlaceholder")}
           className="w-full rounded-lg border border-slate-300 py-2.5 pl-10 pr-4 focus:border-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-200"
         />
       </div>
 
       <label className="sr-only" htmlFor="role-filter">
-        Filter by role
+        {t("staffFilters.allRoles")}
       </label>
       <select
         id="role-filter"
@@ -40,7 +44,7 @@ export function StaffFilters({
       >
         {roles.map((role) => (
           <option key={role} value={role}>
-            {role}
+            {role === ALL_ROLES_OPTION ? t("staffFilters.allRoles") : role}
           </option>
         ))}
       </select>

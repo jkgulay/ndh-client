@@ -1,6 +1,7 @@
 import { Handshake, HeartPulse, ShieldCheck, Sparkles } from "lucide-react";
 import { Container } from "../common/Container";
 import { SectionHeading } from "../common/SectionHeading";
+import { useLanguage } from "../../i18n/LanguageContext";
 
 const CORE_VALUES = [
   {
@@ -26,10 +27,12 @@ const CORE_VALUES = [
 ];
 
 export function CoreValuesSection(): React.JSX.Element {
+  const { t } = useLanguage();
+
   return (
     <section className="bg-surface-muted py-16 sm:py-20">
       <Container>
-        <SectionHeading eyebrow="What Guides Us" title="Our Core Values" />
+        <SectionHeading eyebrow={t("aboutPage.coreValuesEyebrow")} title={t("aboutPage.coreValuesTitle")} />
         <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {CORE_VALUES.map(({ icon: Icon, title, description }) => (
             <div key={title} className="rounded-xl bg-white p-6 text-center shadow-sm">

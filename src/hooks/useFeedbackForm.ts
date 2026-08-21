@@ -1,5 +1,6 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import { submitFeedback } from "../api/feedbackApi";
+import { useLanguage } from "../i18n/LanguageContext";
 import type { FeedbackFormValues } from "../types/feedback.types";
 
 type SubmitStatus = "idle" | "submitting" | "success" | "error";
@@ -19,6 +20,7 @@ export function useFeedbackForm(): {
   const [status, setStatus] = useState<SubmitStatus>("idle");
   const [serverError, setServerError] = useState<string | null>(null);
   const [ratingError, setRatingError] = useState<string | null>(null);
+  const { t } = useLanguage();
 
   function setRating(rating: number): void {
     setValues((previous) => ({ ...previous, rating }));
@@ -32,7 +34,7 @@ export function useFeedbackForm(): {
   async function handleSubmit(event: FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
     if (values.rating < 1) {
-      setRatingError("Please select a star rating.");
+      setRatingError(t("feedback.ratingError"));
       return;
     }
 
@@ -45,11 +47,11 @@ export function useFeedbackForm(): {
         setValues(EMPTY_FORM);
       } else {
         setStatus("error");
-        setServerError(response.error ?? "Something went wrong. Please try again.");
+        setServerError(response.error ?? t("feedback.genericError"));
       }
     } catch {
       setStatus("error");
-      setServerError("We couldn't send your feedback. Please check your connection and try again.");
+      setServerError(t("feedback.networkError"));
     }
   }
 

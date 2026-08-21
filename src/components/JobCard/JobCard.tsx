@@ -1,4 +1,5 @@
 import { Briefcase, Calendar } from "lucide-react";
+import { useLanguage } from "../../i18n/LanguageContext";
 import { formatDate } from "../../utils/formatDate";
 import type { Career } from "../../types/career.types";
 
@@ -13,6 +14,8 @@ const EMPLOYMENT_TYPE_BADGE_CLASSES: Record<Career["type"], string> = {
 };
 
 export function JobCard({ career }: JobCardProps): React.JSX.Element {
+  const { t } = useLanguage();
+
   return (
     <article className="flex flex-col gap-3 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
       <div className="flex flex-wrap items-center gap-2">
@@ -21,7 +24,7 @@ export function JobCard({ career }: JobCardProps): React.JSX.Element {
         </span>
         <span className="flex items-center gap-1 text-xs text-slate-500">
           <Calendar className="h-3.5 w-3.5" aria-hidden="true" />
-          Posted {formatDate(career.postedAt)}
+          {t("jobCard.posted")} {formatDate(career.postedAt)}
         </span>
       </div>
 
@@ -34,13 +37,13 @@ export function JobCard({ career }: JobCardProps): React.JSX.Element {
 
       {career.requirements && (
         <div>
-          <p className="text-sm font-semibold text-primary-900">Requirements</p>
+          <p className="text-sm font-semibold text-primary-900">{t("jobCard.requirements")}</p>
           <p className="text-sm text-slate-600">{career.requirements}</p>
         </div>
       )}
 
       <div>
-        <p className="text-sm font-semibold text-primary-900">How to Apply</p>
+        <p className="text-sm font-semibold text-primary-900">{t("jobCard.howToApply")}</p>
         <p className="text-sm text-slate-600">{career.howToApply}</p>
       </div>
     </article>

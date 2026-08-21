@@ -2,6 +2,8 @@ import { ChevronRight, Clock3, Maximize2, MapPin, ShieldCheck } from "lucide-rea
 import gsap from "gsap";
 import { useLayoutEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import { useLanguage } from "../../i18n/LanguageContext";
+import type { TranslationKey } from "../../i18n/LanguageContext";
 import { useScrollReveal } from "../../hooks/useScrollReveal";
 
 interface HeroSectionProps {
@@ -9,12 +11,12 @@ interface HeroSectionProps {
   tagline: string;
 }
 
-const STATS = [
-  ["25+", "Years of care"],
-  ["50+", "Expert doctors"],
-  ["12", "Departments"],
-  ["24/7", "Emergency support"],
-] as const;
+const STATS: readonly (readonly [string, TranslationKey])[] = [
+  ["25+", "hero.statYearsOfCare"],
+  ["50+", "hero.statExpertDoctors"],
+  ["12", "hero.statDepartments"],
+  ["24/7", "hero.statEmergencySupport"],
+];
 
 function HeroWord({ children, className = "" }: { children: string; className?: string }): React.JSX.Element {
   return (
@@ -27,6 +29,7 @@ function HeroWord({ children, className = "" }: { children: string; className?: 
 export function HeroSection({ hospitalName, tagline }: HeroSectionProps): React.JSX.Element {
   const sectionRef = useRef<HTMLElement>(null);
   const belowFoldRef = useScrollReveal<HTMLDivElement>();
+  const { t } = useLanguage();
 
   useLayoutEffect(() => {
     const context = gsap.context(() => {
@@ -45,26 +48,28 @@ export function HeroSection({ hospitalName, tagline }: HeroSectionProps): React.
       <div className="mx-auto grid w-full max-w-[1400px] items-center gap-10 px-4 pb-8 pt-12 sm:px-8 sm:pb-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16 lg:px-12 lg:pb-12 lg:pt-20">
         <div className="relative z-10">
           <p className="hero-reveal mb-5 flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.2em] text-accent-600">
-            <span className="h-2 w-2 rounded-full bg-accent-500" /> Welcome to {hospitalName}
+            <span className="h-2 w-2 rounded-full bg-accent-500" /> {t("hero.welcomeTo")} {hospitalName}
           </p>
           <h1 className="max-w-xl text-5xl font-bold leading-[0.98] text-primary-950 sm:text-6xl lg:text-7xl">
-            <HeroWord>Expert</HeroWord> <HeroWord>care.</HeroWord>
+            <HeroWord key={`${t("hero.headlineWord1")}-1`}>{t("hero.headlineWord1")}</HeroWord>{" "}
+            <HeroWord key={`${t("hero.headlineWord2")}-2`}>{t("hero.headlineWord2")}</HeroWord>
             <span className="block text-accent-500">
-              <HeroWord>Every</HeroWord> <HeroWord>time.</HeroWord>
+              <HeroWord key={`${t("hero.headlineWord3")}-3`}>{t("hero.headlineWord3")}</HeroWord>{" "}
+              <HeroWord key={`${t("hero.headlineWord4")}-4`}>{t("hero.headlineWord4")}</HeroWord>
             </span>
           </h1>
-          <p className="hero-reveal mt-6 max-w-lg text-base leading-7 text-slate-600 sm:text-lg">{tagline}. Compassionate care, advanced facilities, and a team that puts your wellbeing first.</p>
+          <p className="hero-reveal mt-6 max-w-lg text-base leading-7 text-slate-600 sm:text-lg">{tagline}. {t("hero.taglineSuffix")}</p>
           <div className="hero-reveal mt-8">
           <Link
             to="/services"
             className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary-700 px-5 py-3.5 text-sm font-extrabold text-white shadow-lg shadow-primary-700/20 transition hover:-translate-y-0.5 hover:bg-primary-800"
           >
-            Explore services <ChevronRight className="h-4 w-4" aria-hidden="true" />
+            {t("hero.exploreServices")} <ChevronRight className="h-4 w-4" aria-hidden="true" />
           </Link>
           </div>
           <div className="hero-reveal mt-9 flex flex-wrap gap-x-6 gap-y-3 text-xs font-bold text-slate-500">
-            <span className="flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-accent-600" /> Trusted professionals</span>
-            <span className="flex items-center gap-2"><Clock3 className="h-4 w-4 text-accent-600" /> Open 24/7 for emergencies</span>
+            <span className="flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-accent-600" /> {t("hero.trustedProfessionals")}</span>
+            <span className="flex items-center gap-2"><Clock3 className="h-4 w-4 text-accent-600" /> {t("hero.open247")}</span>
           </div>
         </div>
         <div className="hero-photo relative min-h-[360px] overflow-hidden rounded-[2rem] bg-primary-200 shadow-2xl shadow-primary-900/15 sm:min-h-[480px]">
@@ -77,7 +82,7 @@ export function HeroSection({ hospitalName, tagline }: HeroSectionProps): React.
             <Maximize2 className="h-4 w-4" aria-hidden="true" />
           </span>
           <div className="hero-reveal absolute bottom-5 left-5 right-5 flex items-center justify-between rounded-2xl border border-white/20 bg-white/90 p-4 shadow-xl backdrop-blur sm:bottom-7 sm:left-7 sm:right-7">
-            <div><p className="text-xs font-bold uppercase tracking-wider text-accent-600">Your health, our priority</p><p className="mt-1 text-sm font-extrabold text-primary-950">Care that feels personal</p></div>
+            <div><p className="text-xs font-bold uppercase tracking-wider text-accent-600">{t("hero.yourHealthPriority")}</p><p className="mt-1 text-sm font-extrabold text-primary-950">{t("hero.careThatFeelsPersonal")}</p></div>
             <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-700 text-white"><MapPin className="h-4 w-4" aria-hidden="true" /></span>
           </div>
         </div>
@@ -85,10 +90,10 @@ export function HeroSection({ hospitalName, tagline }: HeroSectionProps): React.
 
       <div ref={belowFoldRef} className="relative z-20 mx-auto -mt-10 max-w-[1400px] px-4 sm:-mt-14 sm:px-8 lg:-mt-16 lg:px-12">
         <div className="reveal-item grid grid-cols-2 divide-x divide-primary-100 overflow-hidden rounded-3xl border border-primary-100 bg-white shadow-2xl shadow-primary-900/10 sm:grid-cols-4">
-          {STATS.map(([value, label]) => (
-            <div key={label} className="px-3 py-6 text-center sm:py-8">
+          {STATS.map(([value, labelKey]) => (
+            <div key={labelKey} className="px-3 py-6 text-center sm:py-8">
               <p className="text-xl font-extrabold text-primary-800 sm:text-2xl">{value}</p>
-              <p className="mt-1 text-[10px] font-bold uppercase tracking-wider text-slate-500 sm:text-xs">{label}</p>
+              <p className="mt-1 text-[10px] font-bold uppercase tracking-wider text-slate-500 sm:text-xs">{t(labelKey)}</p>
             </div>
           ))}
         </div>

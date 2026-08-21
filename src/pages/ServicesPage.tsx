@@ -4,6 +4,7 @@ import { LoadingState } from "../components/common/LoadingState";
 import { PageHero } from "../components/common/PageHero";
 import { ServiceCard } from "../components/ServiceCard/ServiceCard";
 import { useServices } from "../hooks/useServices";
+import { useLanguage } from "../i18n/LanguageContext";
 import { usePageMeta } from "../hooks/usePageMeta";
 import { SERVICE_CATEGORIES } from "../types/service.types";
 import type { Service } from "../types/service.types";
@@ -19,21 +20,19 @@ function groupServicesByCategory(services: Service[]): Map<string, Service[]> {
 
 export function ServicesPage(): React.JSX.Element {
   const { services, isLoading, error } = useServices();
+  const { t } = useLanguage();
   usePageMeta("Services", "Browse the full range of medical services offered across our departments.");
 
   const groupedServices = services ? groupServicesByCategory(services) : new Map<string, Service[]>();
 
   return (
     <>
-      <PageHero
-        title="Our Services"
-        description="Comprehensive care across emergency, outpatient, diagnostic, and specialty departments."
-      />
+      <PageHero title={t("pageHeroServices.title")} description={t("pageHeroServices.description")} />
       <Container className="py-16 sm:py-20">
-        {isLoading && <LoadingState label="Loading services…" />}
+        {isLoading && <LoadingState label={t("serviceHighlights.loading")} />}
         {error && !isLoading && <ErrorState message={error} />}
         {!isLoading && !error && groupedServices.size === 0 && (
-          <p className="text-center text-slate-500">No services are currently listed.</p>
+          <p className="text-center text-slate-500">{t("servicesPage.empty")}</p>
         )}
         {!isLoading &&
           !error &&

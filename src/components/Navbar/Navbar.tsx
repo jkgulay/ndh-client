@@ -1,7 +1,9 @@
 import { ArrowUpRight, Menu, Phone } from "lucide-react";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import { LanguageToggle } from "../LanguageToggle/LanguageToggle";
 import { useHospitalInfo } from "../../hooks/useHospitalInfo";
+import { useLanguage } from "../../i18n/LanguageContext";
 import { formatTelHref } from "../../utils/formatTelHref";
 import { MobileDrawer } from "./MobileDrawer";
 import { NAV_LINKS } from "./navLinks";
@@ -12,6 +14,7 @@ const FALLBACK_EMERGENCY_HOTLINE = "0917-123-4567";
 
 export function Navbar(): React.JSX.Element {
   const { hospitalInfo } = useHospitalInfo();
+  const { t } = useLanguage();
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
@@ -50,19 +53,21 @@ export function Navbar(): React.JSX.Element {
                 }`
               }
             >
-              {link.label}
+              {t(link.labelKey)}
             </NavLink>
           ))}
         </nav>
 
         <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+          <LanguageToggle className="hidden sm:flex" />
+
           <a
             href={formatTelHref(emergencyHotline)}
             aria-label={`Call emergency hotline ${emergencyHotline}`}
             className="hidden items-center gap-1.5 rounded-lg bg-red-600 px-4 py-2.5 text-xs font-extrabold uppercase tracking-wide text-white shadow-sm transition hover:bg-red-700 lg:flex"
           >
             <Phone className="h-4 w-4" aria-hidden="true" />
-            Emergency care
+            {t("nav.emergencyCare")}
             <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
           </a>
 

@@ -1,5 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useLanguage } from "../../i18n/LanguageContext";
 import { formatDate } from "../../utils/formatDate";
 import type { Announcement } from "../../types/announcement.types";
 
@@ -15,6 +16,8 @@ function toPreview(content: string): string {
 }
 
 export function AnnouncementCard({ announcement }: AnnouncementCardProps): React.JSX.Element {
+  const { t } = useLanguage();
+
   return (
     <Link
       to={`/announcements/${announcement._id}`}
@@ -24,7 +27,7 @@ export function AnnouncementCard({ announcement }: AnnouncementCardProps): React
       <h3 className="mt-2 text-lg font-semibold text-primary-900">{announcement.title}</h3>
       <p className="mt-2 flex-1 text-sm text-slate-600">{toPreview(announcement.content)}</p>
       <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary-700">
-        Read more
+        {t("common.readMore")}
         <ArrowRight className="h-4 w-4" aria-hidden="true" />
       </span>
     </Link>

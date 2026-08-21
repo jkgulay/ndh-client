@@ -5,6 +5,7 @@ import { PageHero } from "../components/common/PageHero";
 import { StaffCard } from "../components/StaffCard/StaffCard";
 import { StaffFilters } from "../components/StaffFilters/StaffFilters";
 import { useStaffDirectory } from "../hooks/useStaffDirectory";
+import { useLanguage } from "../i18n/LanguageContext";
 import { usePageMeta } from "../hooks/usePageMeta";
 
 export function StaffPage(): React.JSX.Element {
@@ -18,11 +19,12 @@ export function StaffPage(): React.JSX.Element {
     isLoading,
     error,
   } = useStaffDirectory();
+  const { t } = useLanguage();
   usePageMeta("Our Team", "Find and search our directory of doctors, nurses, and hospital staff by name or role.");
 
   return (
     <>
-      <PageHero title="Our Team" description="Meet the doctors, nurses, and staff who care for our community." />
+      <PageHero title={t("pageHeroStaff.title")} description={t("pageHeroStaff.description")} />
       <Container className="py-16 sm:py-20">
         <StaffFilters
           searchTerm={searchTerm}
@@ -33,10 +35,10 @@ export function StaffPage(): React.JSX.Element {
         />
 
         <div className="mt-10">
-          {isLoading && <LoadingState label="Loading our team…" />}
+          {isLoading && <LoadingState label={t("staffShowcase.loading")} />}
           {error && !isLoading && <ErrorState message={error} />}
           {!isLoading && !error && filteredStaff.length === 0 && (
-            <p className="text-center text-slate-500">No staff match your search.</p>
+            <p className="text-center text-slate-500">{t("staffPage.empty")}</p>
           )}
           {!isLoading && !error && filteredStaff.length > 0 && (
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">

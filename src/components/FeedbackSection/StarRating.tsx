@@ -1,5 +1,7 @@
 import { Star } from "lucide-react";
 import { useState } from "react";
+import { useLanguage } from "../../i18n/LanguageContext";
+import type { TranslationKey } from "../../i18n/LanguageContext";
 
 interface StarRatingProps {
   value: number;
@@ -7,17 +9,18 @@ interface StarRatingProps {
 }
 
 const RATING_VALUES = [1, 2, 3, 4, 5] as const;
-const RATING_LABELS: Record<number, string> = {
-  1: "Poor",
-  2: "Fair",
-  3: "Good",
-  4: "Very good",
-  5: "Excellent",
+const RATING_LABEL_KEYS: Record<number, TranslationKey> = {
+  1: "feedback.ratingPoor",
+  2: "feedback.ratingFair",
+  3: "feedback.ratingGood",
+  4: "feedback.ratingVeryGood",
+  5: "feedback.ratingExcellent",
 };
 
 export function StarRating({ value, onChange }: StarRatingProps): React.JSX.Element {
   const [hoveredRating, setHoveredRating] = useState<number | null>(null);
   const displayedRating = hoveredRating ?? value;
+  const { t } = useLanguage();
 
   return (
     <div className="flex flex-col items-center gap-2">
@@ -28,7 +31,7 @@ export function StarRating({ value, onChange }: StarRatingProps): React.JSX.Elem
             type="button"
             role="radio"
             aria-checked={value === star}
-            aria-label={`${star} star${star > 1 ? "s" : ""} - ${RATING_LABELS[star]}`}
+            aria-label={`${star} star${star > 1 ? "s" : ""} - ${t(RATING_LABEL_KEYS[star])}`}
             onClick={() => onChange(star)}
             onMouseEnter={() => setHoveredRating(star)}
             onFocus={() => setHoveredRating(star)}
@@ -44,7 +47,7 @@ export function StarRating({ value, onChange }: StarRatingProps): React.JSX.Elem
           </button>
         ))}
       </div>
-      <p className="h-5 text-sm font-bold text-primary-700">{displayedRating > 0 ? RATING_LABELS[displayedRating] : ""}</p>
+      <p className="h-5 text-sm font-bold text-primary-700">{displayedRating > 0 ? t(RATING_LABEL_KEYS[displayedRating]) : ""}</p>
     </div>
   );
 }

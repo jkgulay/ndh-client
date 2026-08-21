@@ -2,6 +2,7 @@ import { Facebook, Mail, MapPin, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 import { NAV_LINKS } from "../Navbar/navLinks";
 import { useHospitalInfo } from "../../hooks/useHospitalInfo";
+import { useLanguage } from "../../i18n/LanguageContext";
 import { useServices } from "../../hooks/useServices";
 import { Container } from "../common/Container";
 
@@ -12,6 +13,7 @@ const FALLBACK_TAGLINE = "Caring for our community since 1978";
 export function Footer(): React.JSX.Element {
   const { hospitalInfo } = useHospitalInfo();
   const { services } = useServices();
+  const { t } = useLanguage();
   const currentYear = new Date().getFullYear();
 
   const hospitalName = hospitalInfo?.name ?? FALLBACK_HOSPITAL_NAME;
@@ -30,12 +32,12 @@ export function Footer(): React.JSX.Element {
         </div>
 
         <div>
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-white">Quick Links</h2>
+          <h2 className="text-sm font-semibold uppercase tracking-wide text-white">{t("footer.quickLinks")}</h2>
           <ul className="mt-4 space-y-2 text-sm">
             {NAV_LINKS.map((link) => (
               <li key={link.path}>
                 <Link to={link.path} className="hover:text-white">
-                  {link.label}
+                  {t(link.labelKey)}
                 </Link>
               </li>
             ))}
@@ -43,7 +45,7 @@ export function Footer(): React.JSX.Element {
         </div>
 
         <div>
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-white">Services</h2>
+          <h2 className="text-sm font-semibold uppercase tracking-wide text-white">{t("footer.services")}</h2>
           <ul className="mt-4 space-y-2 text-sm">
             {featuredServices.map((service) => (
               <li key={service._id}>
@@ -56,7 +58,7 @@ export function Footer(): React.JSX.Element {
         </div>
 
         <div>
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-white">Contact</h2>
+          <h2 className="text-sm font-semibold uppercase tracking-wide text-white">{t("footer.contact")}</h2>
           <ul className="mt-4 space-y-3 text-sm">
             {hospitalInfo && (
               <>
@@ -82,11 +84,11 @@ export function Footer(): React.JSX.Element {
       <div className="border-t border-primary-800">
         <Container className="flex flex-col items-center justify-between gap-4 py-6 text-sm sm:flex-row">
           <p>
-            &copy; {currentYear} {hospitalName}. All rights reserved.
+            &copy; {currentYear} {hospitalName}. {t("footer.allRightsReserved")}
           </p>
           <div className="flex items-center gap-4">
             <Link to="/admin/login" className="text-xs text-primary-300 hover:text-white">
-              Staff Login
+              {t("nav.staffLogin")}
             </Link>
             {hospitalInfo?.facebookUrl && (
               <a

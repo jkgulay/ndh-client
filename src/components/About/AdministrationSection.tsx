@@ -1,5 +1,6 @@
 import { Container } from "../common/Container";
 import { SectionHeading } from "../common/SectionHeading";
+import { useLanguage } from "../../i18n/LanguageContext";
 
 const LEADERSHIP = [
   { name: "Dr. Eduardo Bautista", title: "Chief of Hospital" },
@@ -9,10 +10,12 @@ const LEADERSHIP = [
 ];
 
 export function AdministrationSection(): React.JSX.Element {
+  const { t } = useLanguage();
+
   return (
     <section className="bg-surface-muted py-16 sm:py-20">
       <Container>
-        <SectionHeading eyebrow="Leadership" title="Administration" />
+        <SectionHeading eyebrow={t("aboutPage.administrationEyebrow")} title={t("aboutPage.administrationTitle")} />
         <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {LEADERSHIP.map((leader) => (
             <div key={leader.name} className="rounded-xl bg-white p-6 text-center shadow-sm">

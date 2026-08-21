@@ -1,14 +1,16 @@
+import type { TranslationKey } from "../../i18n/LanguageContext";
+
 export interface NavLinkItem {
-  label: string;
+  labelKey: TranslationKey;
   path: string;
 }
 
 export const NAV_LINKS: NavLinkItem[] = [
-  { label: "Home", path: "/" },
-  { label: "About", path: "/about" },
-  { label: "Services", path: "/services" },
-  { label: "Our Team", path: "/staff" },
-  { label: "Careers", path: "/careers" },
-  { label: "Announcements", path: "/announcements" },
-  { label: "Contact", path: "/contact" },
+  { labelKey: "nav.home", path: "/" },
+  { labelKey: "nav.about", path: "/about" },
+  { labelKey: "nav.services", path: "/services" },
+  { labelKey: "nav.ourTeam", path: "/staff" },
+  { labelKey: "nav.careers", path: "/careers" },
+  { labelKey: "nav.announcements", path: "/announcements" },
+  { labelKey: "nav.contact", path: "/contact" },
 ];

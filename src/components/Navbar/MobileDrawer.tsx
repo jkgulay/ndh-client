@@ -1,6 +1,8 @@
 import { X } from "lucide-react";
 import { NavLink } from "react-router-dom";
+import { LanguageToggle } from "../LanguageToggle/LanguageToggle";
 import { NAV_LINKS } from "./navLinks";
+import { useLanguage } from "../../i18n/LanguageContext";
 import { formatTelHref } from "../../utils/formatTelHref";
 
 interface MobileDrawerProps {
@@ -10,12 +12,13 @@ interface MobileDrawerProps {
 }
 
 export function MobileDrawer({ isOpen, onClose, emergencyHotline }: MobileDrawerProps): React.JSX.Element | null {
+  const { t } = useLanguage();
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex flex-col bg-white lg:hidden" role="dialog" aria-modal="true">
       <div className="flex items-center justify-between border-b border-slate-200 px-4 py-4">
-        <span className="text-lg font-bold text-primary-800">Menu</span>
+        <span className="text-lg font-bold text-primary-800">{t("mobileMenu.menu")}</span>
         <button
           type="button"
           onClick={onClose}
@@ -38,13 +41,14 @@ export function MobileDrawer({ isOpen, onClose, emergencyHotline }: MobileDrawer
               }`
             }
           >
-            {link.label}
+            {t(link.labelKey)}
           </NavLink>
         ))}
       </nav>
-      <div className="border-t border-slate-200 px-4 py-4">
+      <div className="flex flex-col items-center gap-4 border-t border-slate-200 px-4 py-4">
+        <LanguageToggle />
         <a href={formatTelHref(emergencyHotline)} className="block text-center font-semibold text-red-600">
-          Emergency Hotline: {emergencyHotline}
+          {t("mobileMenu.emergencyHotlinePrefix")} {emergencyHotline}
         </a>
       </div>
     </div>

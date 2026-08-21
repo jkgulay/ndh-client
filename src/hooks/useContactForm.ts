@@ -1,5 +1,7 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import { submitContactForm } from "../api/contactApi";
+import { useLanguage } from "../i18n/LanguageContext";
+import type { TranslateFn } from "../i18n/LanguageContext";
 import type { ContactFormValues } from "../types/contact.types";
 
 type SubmitStatus = "idle" | "submitting" | "success" | "error";
@@ -7,12 +9,12 @@ type SubmitStatus = "idle" | "submitting" | "success" | "error";
 const EMPTY_FORM: ContactFormValues = { name: "", email: "", subject: "", message: "" };
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-function validate(values: ContactFormValues): Partial<Record<keyof ContactFormValues, string>> {
+function validate(values: ContactFormValues, t: TranslateFn): Partial<Record<keyof ContactFormValues, string>> {
   const errors: Partial<Record<keyof ContactFormValues, string>> = {};
-  if (!values.name.trim()) errors.name = "Please enter your name.";
-  if (!EMAIL_PATTERN.test(values.email)) errors.email = "Please enter a valid email address.";
-  if (!values.subject.trim()) errors.subject = "Please enter a subject.";
-  if (!values.message.trim()) errors.message = "Please enter a message.";
+  if (!values.name.trim()) errors.name = t("contactForm.nameRequired");
+  if (!EMAIL_PATTERN.test(values.email)) errors.email = t("contactForm.emailInvalid");
+  if (!values.subject.trim()) errors.subject = t("contactForm.subjectRequired");
+  if (!values.message.trim()) errors.message = t("contactForm.messageRequired");
   return errors;
 }
 
@@ -28,6 +30,7 @@ export function useContactForm(): {
   const [fieldErrors, setFieldErrors] = useState<Partial<Record<keyof ContactFormValues, string>>>({});
   const [status, setStatus] = useState<SubmitStatus>("idle");
   const [serverError, setServerError] = useState<string | null>(null);
+  const { t } = useLanguage();
 
   function handleChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void {
     const { name, value } = event.target;
@@ -36,7 +39,7 @@ export function useContactForm(): {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
-    const errors = validate(values);
+    const errors = validate(values, t);
     setFieldErrors(errors);
     if (Object.keys(errors).length > 0) return;
 
@@ -49,11 +52,11 @@ export function useContactForm(): {
         setValues(EMPTY_FORM);
       } else {
         setStatus("error");
-        setServerError(response.error ?? "Something went wrong. Please try again.");
+        setServerError(response.error ?? t("contactForm.genericError"));
       }
     } catch {
       setStatus("error");
-      setServerError("We couldn't send your message. Please check your connection and try again.");
+      setServerError(t("contactForm.networkError"));
     }
   }
 

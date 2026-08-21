@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { useStaff } from "./useStaff";
 import type { StaffMember } from "../types/staff.types";
 
-const ALL_ROLES_OPTION = "All Roles";
+export const ALL_ROLES_OPTION = "All Roles";
 
 export function useStaffDirectory(): {
   filteredStaff: StaffMember[];

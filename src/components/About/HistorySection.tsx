@@ -1,5 +1,6 @@
 import { Container } from "../common/Container";
 import { SectionHeading } from "../common/SectionHeading";
+import { useLanguage } from "../../i18n/LanguageContext";
 
 interface HistorySectionProps {
   foundedYear: number;
@@ -21,11 +22,12 @@ function buildMilestones(foundedYear: number): Milestone[] {
 
 export function HistorySection({ foundedYear }: HistorySectionProps): React.JSX.Element {
   const milestones = buildMilestones(foundedYear);
+  const { t } = useLanguage();
 
   return (
     <section className="py-16 sm:py-20">
       <Container>
-        <SectionHeading eyebrow="Our Story" title="History" />
+        <SectionHeading eyebrow={t("aboutPage.historyEyebrow")} title={t("aboutPage.historyTitle")} />
         <p className="mx-auto mt-6 max-w-2xl text-center text-slate-600">
           Founded in {foundedYear} by a small group of local physicians, Nasipit District
           Hospital began as a modest clinic serving a handful of barangays. Over the decades, it
