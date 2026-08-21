@@ -15,17 +15,31 @@ export function FeedbackSection(): React.JSX.Element {
   const { t } = useLanguage();
 
   return (
-    <section className="bg-[#f5faff] py-16 sm:py-24">
+    <section className="bg-surface-tint py-16 sm:py-24">
       <Container>
         <div ref={containerRef}>
           <SectionHeading eyebrow={t("feedback.eyebrow")} title={t("feedback.title")} description={t("feedback.description")} />
 
-          <div className="reveal-item mx-auto mt-10 max-w-xl rounded-3xl border border-primary-100 bg-white p-6 shadow-sm sm:p-10">
+          <div className="mx-auto mt-10 grid max-w-4xl grid-cols-1 items-center gap-8 lg:grid-cols-[0.8fr_1fr]">
+            <div className="reveal-item relative hidden overflow-hidden rounded-[2.5rem] shadow-xl shadow-primary-900/10 lg:block">
+              <img
+                src="/components/pexels-karola-g-4386466.jpg"
+                alt="Patient care at Nasipit District Hospital"
+                className="aspect-[4/5] w-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-primary-950/60 via-primary-900/0 to-transparent" />
+              <div className="absolute bottom-6 left-6 right-6">
+                <p className="text-xs font-bold uppercase tracking-wider text-white/80">{t("feedback.eyebrow")}</p>
+                <p className="mt-1 font-serif text-lg font-medium text-white">{t("feedback.title")}</p>
+              </div>
+            </div>
+
+          <div className="reveal-item rounded-[2.5rem] bg-white p-6 shadow-sm sm:p-10">
             {status === "success" ? (
               <div role="status" className="flex flex-col items-center gap-3 py-6 text-center">
                 <CheckCircle2 className="h-10 w-10 text-accent-600" aria-hidden="true" />
-                <h3 className="text-lg font-bold text-primary-900">{t("feedback.thankYouTitle")}</h3>
-                <p className="text-slate-600">{t("feedback.thankYouDesc")}</p>
+                <h3 className="font-serif text-lg font-medium text-primary-900">{t("feedback.thankYouTitle")}</h3>
+                <p className="text-slate-500">{t("feedback.thankYouDesc")}</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-6">
@@ -63,12 +77,13 @@ export function FeedbackSection(): React.JSX.Element {
                 <button
                   type="submit"
                   disabled={status === "submitting"}
-                  className="inline-flex items-center justify-center rounded-lg bg-primary-700 px-6 py-3.5 text-sm font-extrabold text-white shadow-lg shadow-primary-700/20 transition hover:-translate-y-0.5 hover:bg-primary-800 disabled:pointer-events-none disabled:opacity-60"
+                  className="inline-flex items-center justify-center rounded-full bg-primary-800 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-primary-900/20 transition hover:-translate-y-0.5 hover:bg-primary-900 disabled:pointer-events-none disabled:opacity-60"
                 >
                   {status === "submitting" ? t("feedback.submitting") : t("feedback.submit")}
                 </button>
               </form>
             )}
+          </div>
           </div>
         </div>
       </Container>

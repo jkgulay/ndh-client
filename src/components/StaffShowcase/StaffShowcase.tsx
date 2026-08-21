@@ -35,7 +35,7 @@ export function StaffShowcase(): React.JSX.Element {
           </div>
 
           <div className="reveal-item mt-10 text-center">
-            <Link to="/staff" className="inline-flex items-center gap-2 rounded-lg border border-primary-200 bg-white px-5 py-3 text-sm font-extrabold text-primary-800 shadow-sm transition hover:border-primary-400">
+            <Link to="/staff" className="inline-flex items-center gap-2 rounded-full border border-primary-200 bg-white px-6 py-3 text-sm font-bold text-primary-800 shadow-sm transition hover:border-primary-400">
               {t("staffShowcase.viewAll")} <ChevronRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>

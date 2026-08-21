@@ -38,7 +38,7 @@ export function Navbar(): React.JSX.Element {
       <div className="mx-auto flex w-full max-w-[1400px] items-center justify-between gap-3 px-4 py-3 sm:px-8 lg:gap-8 lg:px-12">
         <NavLink to="/" className="flex shrink-0 items-center gap-2 text-primary-900">
           <img src="/components/naslogo.png" alt="Nasipit District Hospital logo" className="h-11 w-11 object-contain" />
-          <span className="text-sm font-extrabold tracking-tight sm:text-base lg:text-lg">{hospitalName}</span>
+          <span className="font-serif text-sm font-medium tracking-tight sm:text-base lg:text-lg">{hospitalName}</span>
         </NavLink>
 
         <nav className="hidden items-center gap-5 lg:flex xl:gap-7" aria-label="Primary">
@@ -64,7 +64,7 @@ export function Navbar(): React.JSX.Element {
           <a
             href={formatTelHref(emergencyHotline)}
             aria-label={`Call emergency hotline ${emergencyHotline}`}
-            className="hidden items-center gap-1.5 rounded-lg bg-red-600 px-4 py-2.5 text-xs font-extrabold uppercase tracking-wide text-white shadow-sm transition hover:bg-red-700 lg:flex"
+            className="hidden items-center gap-1.5 rounded-full bg-red-600 px-4 py-2.5 text-xs font-extrabold uppercase tracking-wide text-white shadow-sm transition hover:bg-red-700 lg:flex"
           >
             <Phone className="h-4 w-4" aria-hidden="true" />
             {t("nav.emergencyCare")}
