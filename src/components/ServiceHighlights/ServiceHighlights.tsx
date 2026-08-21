@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { ChevronRight } from "lucide-react";
 import { Container } from "../common/Container";
 import { SectionHeading } from "../common/SectionHeading";
 import { LoadingState } from "../common/LoadingState";
@@ -13,7 +14,7 @@ export function ServiceHighlights(): React.JSX.Element {
   const featuredServices = (services ?? []).slice(0, FEATURED_SERVICE_COUNT);
 
   return (
-    <section className="py-16 sm:py-20">
+    <section className="bg-[#f5faff] py-16 sm:py-24">
       <Container>
         <SectionHeading
           eyebrow="What We Offer"
@@ -30,9 +31,9 @@ export function ServiceHighlights(): React.JSX.Element {
                 const CategoryIcon = getServiceCategoryIcon(service.category);
                 return (
                   <div key={service._id} className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-                    <CategoryIcon className="h-8 w-8 text-accent-600" aria-hidden="true" />
-                    <h3 className="mt-3 text-lg font-semibold text-primary-900">{service.name}</h3>
-                    <p className="mt-2 text-sm text-slate-600">{service.description}</p>
+                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary-100 text-primary-700"><CategoryIcon className="h-5 w-5" aria-hidden="true" /></div>
+                    <h3 className="mt-5 text-lg font-semibold text-primary-900">{service.name}</h3>
+                    <p className="mt-2 text-sm leading-6 text-slate-600">{service.description}</p>
                   </div>
                 );
               })}
@@ -41,8 +42,8 @@ export function ServiceHighlights(): React.JSX.Element {
         </div>
 
         <div className="mt-10 text-center">
-          <Link to="/services" className="font-semibold text-primary-700 hover:text-primary-800">
-            View all services →
+          <Link to="/services" className="inline-flex items-center rounded-lg border border-primary-200 bg-white px-5 py-3 text-sm font-bold text-primary-700 shadow-sm hover:border-primary-400">
+            View all services <ChevronRight className="ml-1 h-4 w-4" aria-hidden="true" />
           </Link>
         </div>
       </Container>

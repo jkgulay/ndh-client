@@ -17,19 +17,18 @@ export function AboutSnapshot({ hospitalInfo }: AboutSnapshotProps): React.JSX.E
   ];
 
   return (
-    <section className="bg-surface-muted py-16 sm:py-20">
+    <section className="bg-white py-16 sm:py-24">
       <Container>
         <SectionHeading
           eyebrow="About Us"
           title={`Trusted care in ${hospitalInfo.name}`}
           description={`${hospitalInfo.name} has served our community since ${hospitalInfo.foundedYear}, providing accessible, quality healthcare to patients of every age and background.`}
         />
-        <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-6 sm:grid-cols-3">
+        <div className="mx-auto mt-10 grid max-w-3xl grid-cols-1 gap-4 sm:grid-cols-3">
           {stats.map(({ icon: Icon, label, value }) => (
-            <div key={label} className="flex flex-col items-center rounded-xl bg-white p-6 text-center shadow-sm">
-              <Icon className="h-8 w-8 text-primary-700" aria-hidden="true" />
-              <p className="mt-3 text-3xl font-bold text-primary-900">{value}</p>
-              <p className="text-sm text-slate-500">{label}</p>
+            <div key={label} className="flex items-center gap-4 rounded-2xl border border-primary-100 bg-[#f5faff] p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white text-primary-700 shadow-sm"><Icon className="h-6 w-6" aria-hidden="true" /></span>
+              <div><p className="text-2xl font-bold text-primary-900">{value}</p><p className="text-xs font-bold uppercase tracking-wide text-slate-500">{label}</p></div>
             </div>
           ))}
         </div>

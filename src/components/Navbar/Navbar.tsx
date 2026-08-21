@@ -1,4 +1,4 @@
-import { Menu, Phone } from "lucide-react";
+import { ArrowUpRight, Menu, Phone, ShieldPlus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useHospitalInfo } from "../../hooks/useHospitalInfo";
@@ -32,20 +32,23 @@ export function Navbar(): React.JSX.Element {
         isScrolled ? "shadow-md" : "border-b border-slate-100"
       }`}
     >
-      <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:gap-4 lg:px-8">
-        <NavLink to="/" className="shrink-0 text-base font-bold text-primary-800 sm:text-lg lg:text-xl">
-          {hospitalName}
+      <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:gap-8 lg:px-8">
+        <NavLink to="/" className="flex shrink-0 items-center gap-2 text-primary-900">
+          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary-700 text-white shadow-sm">
+            <ShieldPlus className="h-5 w-5" aria-hidden="true" />
+          </span>
+          <span className="text-sm font-extrabold tracking-tight sm:text-base lg:text-lg">{hospitalName}</span>
         </NavLink>
 
-        <nav className="hidden items-center gap-5 lg:flex xl:gap-6" aria-label="Primary">
+        <nav className="hidden items-center gap-5 lg:flex xl:gap-7" aria-label="Primary">
           {NAV_LINKS.map((link) => (
             <NavLink
               key={link.path}
               to={link.path}
               end={link.path === "/"}
               className={({ isActive }) =>
-                `whitespace-nowrap text-sm font-medium transition-colors ${
-                  isActive ? "text-primary-800" : "text-slate-600 hover:text-primary-700"
+                  `whitespace-nowrap text-xs font-bold uppercase tracking-wide transition-colors ${
+                  isActive ? "text-primary-700" : "text-slate-500 hover:text-primary-700"
                 }`
               }
             >
@@ -58,10 +61,11 @@ export function Navbar(): React.JSX.Element {
           <a
             href={formatTelHref(emergencyHotline)}
             aria-label={`Call emergency hotline ${emergencyHotline}`}
-            className="hidden items-center gap-1.5 rounded-full bg-red-50 px-3 py-1.5 text-sm font-semibold text-red-600 hover:bg-red-100 lg:flex"
+            className="hidden items-center gap-1.5 rounded-lg bg-red-600 px-4 py-2.5 text-xs font-extrabold uppercase tracking-wide text-white shadow-sm transition hover:bg-red-700 lg:flex"
           >
             <Phone className="h-4 w-4" aria-hidden="true" />
-            {emergencyHotline}
+            Emergency care
+            <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
           </a>
 
           <a
