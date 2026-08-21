@@ -22,7 +22,10 @@ export function Footer(): React.JSX.Element {
     <footer className="bg-primary-900 text-primary-100">
       <Container className="grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-4">
         <div>
-          <p className="text-lg font-bold text-white">{hospitalName}</p>
+          <div className="flex items-center gap-3">
+            <img src="/components/naslogo.png" alt="Nasipit District Hospital logo" className="h-14 w-14 object-contain" />
+            <p className="text-lg font-bold text-white">{hospitalName}</p>
+          </div>
           <p className="mt-2 text-sm text-primary-200">{tagline}</p>
         </div>
 
