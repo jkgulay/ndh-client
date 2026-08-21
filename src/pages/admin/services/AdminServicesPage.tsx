@@ -1,60 +1,40 @@
 import { Plus } from "lucide-react";
-import { useState } from "react";
+import { ActiveStatusBadge } from "../../../components/Admin/ActiveStatusBadge";
 import { ConfirmDeleteDialog } from "../../../components/Admin/ConfirmDeleteDialog";
 import { DataTable, type DataTableColumn } from "../../../components/Admin/DataTable";
 import { Modal } from "../../../components/Admin/Modal";
 import { ErrorState } from "../../../components/common/ErrorState";
 import { LoadingState } from "../../../components/common/LoadingState";
 import { deleteService, fetchAllServicesForAdmin } from "../../../api/servicesApi";
-import { useFetch } from "../../../hooks/useFetch";
+import { useAdminResourceList } from "../../../hooks/useAdminResourceList";
 import type { Service } from "../../../types/service.types";
 import { ServiceForm } from "./ServiceForm";
 
 const COLUMNS: DataTableColumn<Service>[] = [
   { header: "Name", render: (item) => <span className="font-medium text-slate-800">{item.name}</span> },
-  {
-    header: "Category",
-    render: (item) => <span className="text-sm text-slate-600">{item.category}</span>,
-  },
-  {
-    header: "Status",
-    render: (item) => (
-      <span
-        className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${
-          item.isActive ? "bg-accent-100 text-accent-700" : "bg-slate-100 text-slate-500"
-        }`}
-      >
-        {item.isActive ? "Active" : "Inactive"}
-      </span>
-    ),
-  },
+  { header: "Category", render: (item) => <span className="text-sm text-slate-600">{item.category}</span> },
+  { header: "Status", render: (item) => <ActiveStatusBadge isActive={item.isActive} /> },
 ];
 
 export function AdminServicesPage(): React.JSX.Element {
-  const { data: services, isLoading, error, refetch } = useFetch(fetchAllServicesForAdmin);
-  const [editingItem, setEditingItem] = useState<Service | null | "new">(null);
-  const [deletingItem, setDeletingItem] = useState<Service | null>(null);
-  const [isDeleting, setIsDeleting] = useState<boolean>(false);
-  const [deleteError, setDeleteError] = useState<string | null>(null);
-
-  async function handleConfirmDelete(): Promise<void> {
-    if (!deletingItem) return;
-    setIsDeleting(true);
-    setDeleteError(null);
-    try {
-      const response = await deleteService(deletingItem._id);
-      if (response.success) {
-        setDeletingItem(null);
-        refetch();
-      } else {
-        setDeleteError(response.error ?? "Unable to delete this service.");
-      }
-    } catch {
-      setDeleteError("We couldn't reach the server. Please try again.");
-    } finally {
-      setIsDeleting(false);
-    }
-  }
+  const {
+    items: services,
+    isLoading,
+    error,
+    refetch,
+    editingItem,
+    setEditingItem,
+    deletingItem,
+    setDeletingItem,
+    isDeleting,
+    deleteError,
+    handleConfirmDelete,
+  } = useAdminResourceList({
+    fetchAll: fetchAllServicesForAdmin,
+    deleteItem: deleteService,
+    getId: (item) => item._id,
+    resourceLabel: "service",
+  });
 
   return (
     <div>

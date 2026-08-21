@@ -10,7 +10,7 @@ interface DataTableProps<T> {
   items: T[];
   columns: DataTableColumn<T>[];
   getRowKey: (item: T) => string;
-  onEdit: (item: T) => void;
+  onEdit?: (item: T) => void;
   onDelete: (item: T) => void;
   emptyMessage: string;
 }
@@ -52,14 +52,16 @@ export function DataTable<T>({
               ))}
               <td className="px-4 py-3 align-top">
                 <div className="flex justify-end gap-1.5">
-                  <button
-                    type="button"
-                    onClick={() => onEdit(item)}
-                    aria-label="Edit"
-                    className="rounded-md p-2 text-primary-700 hover:bg-primary-50"
-                  >
-                    <Pencil className="h-4 w-4" aria-hidden="true" />
-                  </button>
+                  {onEdit && (
+                    <button
+                      type="button"
+                      onClick={() => onEdit(item)}
+                      aria-label="Edit"
+                      className="rounded-md p-2 text-primary-700 hover:bg-primary-50"
+                    >
+                      <Pencil className="h-4 w-4" aria-hidden="true" />
+                    </button>
+                  )}
                   <button
                     type="button"
                     onClick={() => onDelete(item)}

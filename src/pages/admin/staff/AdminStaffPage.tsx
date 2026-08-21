@@ -1,12 +1,12 @@
 import { Plus } from "lucide-react";
-import { useState } from "react";
+import { ActiveStatusBadge } from "../../../components/Admin/ActiveStatusBadge";
 import { ConfirmDeleteDialog } from "../../../components/Admin/ConfirmDeleteDialog";
 import { DataTable, type DataTableColumn } from "../../../components/Admin/DataTable";
 import { Modal } from "../../../components/Admin/Modal";
 import { ErrorState } from "../../../components/common/ErrorState";
 import { LoadingState } from "../../../components/common/LoadingState";
 import { deleteStaffMember, fetchAllStaffForAdmin } from "../../../api/staffApi";
-import { useFetch } from "../../../hooks/useFetch";
+import { useAdminResourceList } from "../../../hooks/useAdminResourceList";
 import type { StaffMember } from "../../../types/staff.types";
 import { StaffForm } from "./StaffForm";
 
@@ -14,45 +14,28 @@ const COLUMNS: DataTableColumn<StaffMember>[] = [
   { header: "Name", render: (item) => <span className="font-medium text-slate-800">{item.name}</span> },
   { header: "Role", render: (item) => item.role },
   { header: "Schedule", render: (item) => item.schedule },
-  {
-    header: "Status",
-    render: (item) => (
-      <span
-        className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${
-          item.isActive ? "bg-accent-100 text-accent-700" : "bg-slate-100 text-slate-500"
-        }`}
-      >
-        {item.isActive ? "Active" : "Inactive"}
-      </span>
-    ),
-  },
+  { header: "Status", render: (item) => <ActiveStatusBadge isActive={item.isActive} /> },
 ];
 
 export function AdminStaffPage(): React.JSX.Element {
-  const { data: staff, isLoading, error, refetch } = useFetch(fetchAllStaffForAdmin);
-  const [editingItem, setEditingItem] = useState<StaffMember | null | "new">(null);
-  const [deletingItem, setDeletingItem] = useState<StaffMember | null>(null);
-  const [isDeleting, setIsDeleting] = useState<boolean>(false);
-  const [deleteError, setDeleteError] = useState<string | null>(null);
-
-  async function handleConfirmDelete(): Promise<void> {
-    if (!deletingItem) return;
-    setIsDeleting(true);
-    setDeleteError(null);
-    try {
-      const response = await deleteStaffMember(deletingItem._id);
-      if (response.success) {
-        setDeletingItem(null);
-        refetch();
-      } else {
-        setDeleteError(response.error ?? "Unable to delete this staff member.");
-      }
-    } catch {
-      setDeleteError("We couldn't reach the server. Please try again.");
-    } finally {
-      setIsDeleting(false);
-    }
-  }
+  const {
+    items: staff,
+    isLoading,
+    error,
+    refetch,
+    editingItem,
+    setEditingItem,
+    deletingItem,
+    setDeletingItem,
+    isDeleting,
+    deleteError,
+    handleConfirmDelete,
+  } = useAdminResourceList({
+    fetchAll: fetchAllStaffForAdmin,
+    deleteItem: deleteStaffMember,
+    getId: (item) => item._id,
+    resourceLabel: "staff member",
+  });
 
   return (
     <div>

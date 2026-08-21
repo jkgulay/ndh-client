@@ -1,11 +1,10 @@
-import { Trash2 } from "lucide-react";
-import { useState } from "react";
 import { ConfirmDeleteDialog } from "../../../components/Admin/ConfirmDeleteDialog";
+import { DataTable, type DataTableColumn } from "../../../components/Admin/DataTable";
 import { ErrorState } from "../../../components/common/ErrorState";
 import { LoadingState } from "../../../components/common/LoadingState";
 import { StarRatingDisplay } from "../../../components/FeedbackSection/StarRating";
 import { deleteFeedback, fetchAllFeedbackForAdmin } from "../../../api/feedbackApi";
-import { useFetch } from "../../../hooks/useFetch";
+import { useAdminResourceList } from "../../../hooks/useAdminResourceList";
 import { formatDate } from "../../../utils/formatDate";
 import type { Feedback } from "../../../types/feedback.types";
 
@@ -15,30 +14,31 @@ function getAverageRating(feedback: Feedback[]): string {
   return (total / feedback.length).toFixed(1);
 }
 
-export function AdminFeedbackPage(): React.JSX.Element {
-  const { data: feedback, isLoading, error, refetch } = useFetch(fetchAllFeedbackForAdmin);
-  const [deletingItem, setDeletingItem] = useState<Feedback | null>(null);
-  const [isDeleting, setIsDeleting] = useState<boolean>(false);
-  const [deleteError, setDeleteError] = useState<string | null>(null);
+const COLUMNS: DataTableColumn<Feedback>[] = [
+  { header: "Date", render: (item) => formatDate(item.createdAt) },
+  { header: "Rating", render: (item) => <StarRatingDisplay rating={item.rating} /> },
+  {
+    header: "Comment",
+    render: (item) => item.comment || <span className="italic text-slate-400">No comment left</span>,
+  },
+];
 
-  async function handleConfirmDelete(): Promise<void> {
-    if (!deletingItem) return;
-    setIsDeleting(true);
-    setDeleteError(null);
-    try {
-      const response = await deleteFeedback(deletingItem._id);
-      if (response.success) {
-        setDeletingItem(null);
-        refetch();
-      } else {
-        setDeleteError(response.error ?? "Unable to delete this feedback.");
-      }
-    } catch {
-      setDeleteError("We couldn't reach the server. Please try again.");
-    } finally {
-      setIsDeleting(false);
-    }
-  }
+export function AdminFeedbackPage(): React.JSX.Element {
+  const {
+    items: feedback,
+    isLoading,
+    error,
+    deletingItem,
+    setDeletingItem,
+    isDeleting,
+    deleteError,
+    handleConfirmDelete,
+  } = useAdminResourceList({
+    fetchAll: fetchAllFeedbackForAdmin,
+    deleteItem: deleteFeedback,
+    getId: (item) => item._id,
+    resourceLabel: "feedback",
+  });
 
   return (
     <div>
@@ -54,47 +54,14 @@ export function AdminFeedbackPage(): React.JSX.Element {
 
       {isLoading && <LoadingState label="Loading feedback…" />}
       {!isLoading && error && <ErrorState message={error} />}
-      {!isLoading && !error && (!feedback || feedback.length === 0) && (
-        <p className="rounded-lg border border-slate-200 bg-slate-50 px-4 py-10 text-center text-slate-500">
-          No feedback has been submitted yet.
-        </p>
-      )}
-      {!isLoading && !error && feedback && feedback.length > 0 && (
-        <div className="overflow-x-auto rounded-lg border border-slate-200">
-          <table className="w-full min-w-[640px] text-left text-sm">
-            <thead className="bg-slate-50 text-xs font-semibold uppercase tracking-wide text-slate-500">
-              <tr>
-                <th scope="col" className="px-4 py-3">Date</th>
-                <th scope="col" className="px-4 py-3">Rating</th>
-                <th scope="col" className="px-4 py-3">Comment</th>
-                <th scope="col" className="px-4 py-3 text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100">
-              {feedback.map((item) => (
-                <tr key={item._id} className="hover:bg-slate-50">
-                  <td className="whitespace-nowrap px-4 py-3 align-top text-slate-700">{formatDate(item.createdAt)}</td>
-                  <td className="px-4 py-3 align-top"><StarRatingDisplay rating={item.rating} /></td>
-                  <td className="px-4 py-3 align-top text-slate-700">
-                    {item.comment ? item.comment : <span className="italic text-slate-400">No comment left</span>}
-                  </td>
-                  <td className="px-4 py-3 align-top">
-                    <div className="flex justify-end">
-                      <button
-                        type="button"
-                        onClick={() => setDeletingItem(item)}
-                        aria-label="Delete"
-                        className="rounded-md p-2 text-red-600 hover:bg-red-50"
-                      >
-                        <Trash2 className="h-4 w-4" aria-hidden="true" />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+      {!isLoading && !error && (
+        <DataTable
+          items={feedback ?? []}
+          columns={COLUMNS}
+          getRowKey={(item) => item._id}
+          onDelete={setDeletingItem}
+          emptyMessage="No feedback has been submitted yet."
+        />
       )}
 
       {deletingItem && (

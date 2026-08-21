@@ -1,12 +1,12 @@
 import { Plus } from "lucide-react";
-import { useState } from "react";
+import { ActiveStatusBadge } from "../../../components/Admin/ActiveStatusBadge";
 import { ConfirmDeleteDialog } from "../../../components/Admin/ConfirmDeleteDialog";
 import { DataTable, type DataTableColumn } from "../../../components/Admin/DataTable";
 import { Modal } from "../../../components/Admin/Modal";
 import { ErrorState } from "../../../components/common/ErrorState";
 import { LoadingState } from "../../../components/common/LoadingState";
 import { deleteCareer, fetchAllCareersForAdmin } from "../../../api/careersApi";
-import { useFetch } from "../../../hooks/useFetch";
+import { useAdminResourceList } from "../../../hooks/useAdminResourceList";
 import type { Career } from "../../../types/career.types";
 import { CareerForm } from "./CareerForm";
 
@@ -14,45 +14,28 @@ const COLUMNS: DataTableColumn<Career>[] = [
   { header: "Position", render: (item) => <span className="font-medium text-slate-800">{item.title}</span> },
   { header: "Department", render: (item) => item.department },
   { header: "Type", render: (item) => item.type },
-  {
-    header: "Status",
-    render: (item) => (
-      <span
-        className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${
-          item.isActive ? "bg-accent-100 text-accent-700" : "bg-slate-100 text-slate-500"
-        }`}
-      >
-        {item.isActive ? "Active" : "Inactive"}
-      </span>
-    ),
-  },
+  { header: "Status", render: (item) => <ActiveStatusBadge isActive={item.isActive} /> },
 ];
 
 export function AdminCareersPage(): React.JSX.Element {
-  const { data: careers, isLoading, error, refetch } = useFetch(fetchAllCareersForAdmin);
-  const [editingItem, setEditingItem] = useState<Career | null | "new">(null);
-  const [deletingItem, setDeletingItem] = useState<Career | null>(null);
-  const [isDeleting, setIsDeleting] = useState<boolean>(false);
-  const [deleteError, setDeleteError] = useState<string | null>(null);
-
-  async function handleConfirmDelete(): Promise<void> {
-    if (!deletingItem) return;
-    setIsDeleting(true);
-    setDeleteError(null);
-    try {
-      const response = await deleteCareer(deletingItem._id);
-      if (response.success) {
-        setDeletingItem(null);
-        refetch();
-      } else {
-        setDeleteError(response.error ?? "Unable to delete this job posting.");
-      }
-    } catch {
-      setDeleteError("We couldn't reach the server. Please try again.");
-    } finally {
-      setIsDeleting(false);
-    }
-  }
+  const {
+    items: careers,
+    isLoading,
+    error,
+    refetch,
+    editingItem,
+    setEditingItem,
+    deletingItem,
+    setDeletingItem,
+    isDeleting,
+    deleteError,
+    handleConfirmDelete,
+  } = useAdminResourceList({
+    fetchAll: fetchAllCareersForAdmin,
+    deleteItem: deleteCareer,
+    getId: (item) => item._id,
+    resourceLabel: "job posting",
+  });
 
   return (
     <div>
