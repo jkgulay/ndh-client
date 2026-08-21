@@ -1,9 +1,12 @@
 import { CheckCircle2 } from "lucide-react";
 import { Container } from "../common/Container";
 import { SectionHeading } from "../common/SectionHeading";
+import { WaveDivider } from "../common/WaveDivider";
+import { DotPattern } from "../common/DotPattern";
 import { useFeedbackForm } from "../../hooks/useFeedbackForm";
 import { useLanguage } from "../../i18n/LanguageContext";
 import { useScrollReveal } from "../../hooks/useScrollReveal";
+import { useParallax } from "../../hooks/useParallax";
 import { StarRating } from "./StarRating";
 import { FORM_LABEL_CLASSES as LABEL_CLASSES } from "../common/formStyles";
 
@@ -12,10 +15,12 @@ const COMMENT_MAX_LENGTH = 1000;
 export function FeedbackSection(): React.JSX.Element {
   const { values, status, serverError, ratingError, setRating, handleCommentChange, handleSubmit } = useFeedbackForm();
   const containerRef = useScrollReveal<HTMLDivElement>();
+  const parallaxRef = useParallax<HTMLImageElement>(8);
   const { t } = useLanguage();
 
   return (
-    <section className="bg-surface-tint py-16 sm:py-24">
+    <section className="relative overflow-hidden bg-surface-tint py-16 sm:py-24">
+      <DotPattern className="bottom-10 left-6 hidden lg:block" />
       <Container>
         <div ref={containerRef}>
           <SectionHeading eyebrow={t("feedback.eyebrow")} title={t("feedback.title")} description={t("feedback.description")} />
@@ -23,9 +28,10 @@ export function FeedbackSection(): React.JSX.Element {
           <div className="mx-auto mt-10 grid max-w-4xl grid-cols-1 items-center gap-8 lg:grid-cols-[0.8fr_1fr]">
             <div className="reveal-item relative hidden overflow-hidden rounded-[2.5rem] shadow-xl shadow-primary-900/10 lg:block">
               <img
+                ref={parallaxRef}
                 src="/components/pexels-karola-g-4386466.jpg"
                 alt="Patient care at Nasipit District Hospital"
-                className="aspect-[4/5] w-full object-cover"
+                className="aspect-[4/5] w-full scale-125 object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-primary-950/60 via-primary-900/0 to-transparent" />
               <div className="absolute bottom-6 left-6 right-6">
@@ -87,6 +93,7 @@ export function FeedbackSection(): React.JSX.Element {
           </div>
         </div>
       </Container>
+      <WaveDivider fillClassName="fill-primary-950" />
     </section>
   );
 }

@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { useLanguage } from "../../i18n/LanguageContext";
 import type { TranslationKey } from "../../i18n/LanguageContext";
 import { useScrollReveal } from "../../hooks/useScrollReveal";
+import { useCountUp } from "../../hooks/useCountUp";
+import { useParallax } from "../../hooks/useParallax";
 
 interface HeroSectionProps {
   hospitalName: string;
@@ -29,6 +31,8 @@ function HeroWord({ children, className = "" }: { children: string; className?: 
 export function HeroSection({ hospitalName, tagline }: HeroSectionProps): React.JSX.Element {
   const sectionRef = useRef<HTMLElement>(null);
   const belowFoldRef = useScrollReveal<HTMLDivElement>();
+  const statsRef = useCountUp<HTMLDivElement>();
+  const parallaxRef = useParallax<HTMLImageElement>(10);
   const { t } = useLanguage();
 
   useLayoutEffect(() => {
@@ -49,10 +53,15 @@ export function HeroSection({ hospitalName, tagline }: HeroSectionProps): React.
         <div className="hero-photo relative">
           <span
             aria-hidden="true"
-            className="absolute -right-6 -top-6 hidden h-28 w-28 rounded-full border-4 border-white/70 bg-accent-200/60 sm:block"
+            className="animate-float absolute -right-6 -top-6 hidden h-28 w-28 rounded-full border-4 border-white/70 bg-accent-200/60 sm:block"
           />
           <div className="relative min-h-[360px] overflow-hidden rounded-[2.5rem] bg-primary-200 shadow-2xl shadow-primary-900/15 sm:min-h-[480px]">
-            <img src="/components/nasipitpics.png" alt="Nasipit District Hospital staff and facility" className="absolute inset-0 h-full w-full object-cover" />
+            <img
+              ref={parallaxRef}
+              src="/components/nasipitpics.png"
+              alt="Nasipit District Hospital staff and facility"
+              className="absolute inset-0 h-full w-full scale-125 object-cover"
+            />
             <div className="absolute inset-0 bg-gradient-to-tr from-primary-950/60 via-primary-900/5 to-transparent" />
             <span
               aria-hidden="true"
@@ -69,7 +78,11 @@ export function HeroSection({ hospitalName, tagline }: HeroSectionProps): React.
 
         <div className="relative z-10">
           <p className="hero-reveal mb-5 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.25em] text-accent-600">
-            <span className="h-1.5 w-1.5 rounded-full bg-accent-500" /> {t("hero.welcomeTo")} {hospitalName}
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-400 opacity-75" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent-500" />
+            </span>
+            {t("hero.welcomeTo")} {hospitalName}
           </p>
           <h1 className="max-w-xl font-serif text-5xl font-medium leading-[1.03] text-primary-950 sm:text-6xl lg:text-[4.5rem]">
             <HeroWord key={`${t("hero.headlineWord1")}-1`}>{t("hero.headlineWord1")}</HeroWord>{" "}
@@ -104,10 +117,13 @@ export function HeroSection({ hospitalName, tagline }: HeroSectionProps): React.
       </div>
 
       <div ref={belowFoldRef} className="relative z-20 mx-auto -mt-8 max-w-[1400px] px-4 sm:-mt-10 sm:px-8 lg:-mt-12 lg:px-12">
-        <div className="reveal-item grid grid-cols-2 gap-px overflow-hidden rounded-[2rem] border border-primary-100 bg-primary-100 shadow-2xl shadow-primary-900/10 sm:grid-cols-4 sm:rounded-full">
+        <div
+          ref={statsRef}
+          className="reveal-item grid grid-cols-2 gap-px overflow-hidden rounded-[2rem] border border-primary-100 bg-primary-100 shadow-2xl shadow-primary-900/10 sm:grid-cols-4 sm:rounded-full"
+        >
           {STATS.map(([value, labelKey]) => (
             <div key={labelKey} className="bg-white px-3 py-5 text-center sm:py-6">
-              <p className="font-serif text-xl font-medium text-primary-800 sm:text-2xl">{value}</p>
+              <p data-countup={value} className="font-serif text-xl font-medium text-primary-800 sm:text-2xl">{value}</p>
               <p className="mt-1 text-[10px] font-bold uppercase tracking-wider text-slate-500 sm:text-xs">{t(labelKey)}</p>
             </div>
           ))}

@@ -9,7 +9,11 @@ export function SectionHeading({ eyebrow, title, description }: SectionHeadingPr
     <div className="reveal-item mx-auto max-w-2xl text-center">
       {eyebrow && (
         <p className="mb-4 flex items-center justify-center gap-2 text-xs font-bold uppercase tracking-[0.25em] text-accent-600">
-          <span className="h-1.5 w-1.5 rounded-full bg-accent-500" /> {eyebrow}
+          <span className="relative flex h-1.5 w-1.5">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-400 opacity-75" />
+            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent-500" />
+          </span>
+          {eyebrow}
         </p>
       )}
       <h2 className="font-serif text-3xl font-medium leading-tight text-primary-950 sm:text-4xl">{title}</h2>

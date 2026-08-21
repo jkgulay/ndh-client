@@ -4,6 +4,8 @@ import { Container } from "../common/Container";
 import { SectionHeading } from "../common/SectionHeading";
 import { LoadingState } from "../common/LoadingState";
 import { ErrorState } from "../common/ErrorState";
+import { WaveDivider } from "../common/WaveDivider";
+import { DotPattern } from "../common/DotPattern";
 import { useServices } from "../../hooks/useServices";
 import { useLanguage } from "../../i18n/LanguageContext";
 import { useScrollReveal } from "../../hooks/useScrollReveal";
@@ -18,7 +20,8 @@ export function ServiceHighlights(): React.JSX.Element {
   const { t } = useLanguage();
 
   return (
-    <section className="bg-surface-tint py-16 sm:py-24">
+    <section className="relative overflow-hidden bg-surface-tint py-16 sm:py-24">
+      <DotPattern className="right-6 top-10 hidden lg:block" />
       <Container>
         <div ref={containerRef}>
           <SectionHeading
@@ -35,9 +38,9 @@ export function ServiceHighlights(): React.JSX.Element {
                 {featuredServices.map((service) => {
                   const CategoryIcon = getServiceCategoryIcon(service.category);
                   return (
-                    <div key={service._id} className="reveal-item overflow-hidden rounded-3xl bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+                    <div key={service._id} className="group reveal-item overflow-hidden rounded-3xl bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
                       <div className="flex h-28 items-center justify-center bg-primary-50">
-                        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white text-primary-700 shadow-sm"><CategoryIcon className="h-6 w-6" aria-hidden="true" /></div>
+                        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white text-primary-700 shadow-sm transition duration-300 group-hover:-rotate-6 group-hover:scale-110"><CategoryIcon className="h-6 w-6" aria-hidden="true" /></div>
                       </div>
                       <div className="p-6">
                         <h3 className="font-serif text-lg font-medium text-primary-900">{service.name}</h3>
@@ -57,6 +60,7 @@ export function ServiceHighlights(): React.JSX.Element {
           </div>
         </div>
       </Container>
+      <WaveDivider fillClassName="fill-white" />
     </section>
   );
 }
