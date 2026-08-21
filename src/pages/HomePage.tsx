@@ -2,6 +2,7 @@ import { AboutSnapshot } from "../components/AboutSnapshot/AboutSnapshot";
 import { AnnouncementsBanner } from "../components/AnnouncementsBanner/AnnouncementsBanner";
 import { CtaStrip } from "../components/CtaStrip/CtaStrip";
 import { DoctorsShowcase } from "../components/DoctorsShowcase/DoctorsShowcase";
+import { FeedbackSection } from "../components/FeedbackSection/FeedbackSection";
 import { HeroSection } from "../components/HeroSection/HeroSection";
 import { ServiceHighlights } from "../components/ServiceHighlights/ServiceHighlights";
 import { ErrorState } from "../components/common/ErrorState";
@@ -26,6 +27,7 @@ export function HomePage(): React.JSX.Element {
       <ServiceHighlights />
       <AnnouncementsBanner />
       <DoctorsShowcase />
+      <FeedbackSection />
       <CtaStrip hospitalInfo={hospitalInfo} />
     </>
   );
