@@ -18,7 +18,7 @@ export function AnnouncementCard({ announcement }: AnnouncementCardProps): React
   return (
     <Link
       to={`/announcements/${announcement._id}`}
-      className="flex flex-col rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md"
+      className="flex h-full flex-col rounded-2xl border border-primary-100 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
     >
       <p className="text-sm text-slate-500">{formatDate(announcement.publishedAt)}</p>
       <h3 className="mt-2 text-lg font-semibold text-primary-900">{announcement.title}</h3>

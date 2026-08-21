@@ -8,7 +8,7 @@ const PLACEHOLDER_IMAGE_URL = "https://placehold.co/400x400?text=Doctor";
 
 export function DoctorCard({ doctor }: DoctorCardProps): React.JSX.Element {
   return (
-    <article className="flex w-full flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+    <article className="flex h-full w-full flex-col overflow-hidden rounded-2xl border border-primary-100 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md">
       <img
         src={doctor.imageUrl ?? PLACEHOLDER_IMAGE_URL}
         alt={`Portrait of ${doctor.name}`}
