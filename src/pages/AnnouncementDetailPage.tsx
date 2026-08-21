@@ -28,6 +28,13 @@ export function AnnouncementDetailPage(): React.JSX.Element {
       {error && !isLoading && <ErrorState message={error} />}
       {!isLoading && !error && announcement && (
         <article className="mx-auto max-w-2xl">
+          {announcement.imageUrl && (
+            <img
+              src={announcement.imageUrl}
+              alt={announcement.title}
+              className="mb-6 h-64 w-full rounded-2xl object-cover sm:h-80"
+            />
+          )}
           <p className="text-sm text-slate-500">{formatDate(announcement.publishedAt)}</p>
           <h1 className="mt-2 text-3xl font-bold text-primary-900 sm:text-4xl">{announcement.title}</h1>
           <p className="mt-6 whitespace-pre-line text-slate-700">{announcement.content}</p>

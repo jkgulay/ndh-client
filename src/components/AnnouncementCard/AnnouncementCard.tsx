@@ -21,15 +21,25 @@ export function AnnouncementCard({ announcement }: AnnouncementCardProps): React
   return (
     <Link
       to={`/announcements/${announcement._id}`}
-      className="flex h-full flex-col rounded-2xl border border-primary-100 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+      className="flex h-full flex-col overflow-hidden rounded-2xl border border-primary-100 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md"
     >
-      <p className="text-sm text-slate-500">{formatDate(announcement.publishedAt)}</p>
-      <h3 className="mt-2 text-lg font-semibold text-primary-900">{announcement.title}</h3>
-      <p className="mt-2 flex-1 text-sm text-slate-600">{toPreview(announcement.content)}</p>
-      <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary-700">
-        {t("common.readMore")}
-        <ArrowRight className="h-4 w-4" aria-hidden="true" />
-      </span>
+      {announcement.imageUrl && (
+        <img
+          src={announcement.imageUrl}
+          alt={announcement.title}
+          className="h-40 w-full object-cover"
+          loading="lazy"
+        />
+      )}
+      <div className="flex flex-1 flex-col p-6">
+        <p className="text-sm text-slate-500">{formatDate(announcement.publishedAt)}</p>
+        <h3 className="mt-2 text-lg font-semibold text-primary-900">{announcement.title}</h3>
+        <p className="mt-2 flex-1 text-sm text-slate-600">{toPreview(announcement.content)}</p>
+        <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary-700">
+          {t("common.readMore")}
+          <ArrowRight className="h-4 w-4" aria-hidden="true" />
+        </span>
+      </div>
     </Link>
   );
 }
