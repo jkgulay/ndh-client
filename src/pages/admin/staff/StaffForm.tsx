@@ -1,42 +1,42 @@
 import { useRef, useState, type ChangeEvent, type FormEvent } from "react";
-import { createDoctor, updateDoctor, uploadDoctorImage } from "../../../api/doctorsApi";
-import type { DoctorInput } from "../../../api/doctorsApi";
+import { createStaffMember, updateStaffMember, uploadStaffImage } from "../../../api/staffApi";
+import type { StaffMemberInput } from "../../../api/staffApi";
 import {
   FORM_ERROR_CLASSES as ERROR_CLASSES,
   FORM_INPUT_CLASSES as INPUT_CLASSES,
   FORM_LABEL_CLASSES as LABEL_CLASSES,
 } from "../../../components/common/formStyles";
-import type { Doctor } from "../../../types/doctor.types";
+import type { StaffMember } from "../../../types/staff.types";
 
-const EMPTY_VALUES: DoctorInput = {
+const EMPTY_VALUES: StaffMemberInput = {
   name: "",
-  specialization: "",
+  role: "",
   schedule: "",
   imageUrl: "",
   bio: "",
   isActive: true,
 };
 
-function toFormValues(doctor: Doctor | null): DoctorInput {
-  if (!doctor) return EMPTY_VALUES;
+function toFormValues(member: StaffMember | null): StaffMemberInput {
+  if (!member) return EMPTY_VALUES;
   return {
-    name: doctor.name,
-    specialization: doctor.specialization,
-    schedule: doctor.schedule,
-    imageUrl: doctor.imageUrl ?? "",
-    bio: doctor.bio ?? "",
-    isActive: doctor.isActive,
+    name: member.name,
+    role: member.role,
+    schedule: member.schedule,
+    imageUrl: member.imageUrl ?? "",
+    bio: member.bio ?? "",
+    isActive: member.isActive,
   };
 }
 
-interface DoctorFormProps {
-  initialValue: Doctor | null;
+interface StaffFormProps {
+  initialValue: StaffMember | null;
   onCancel: () => void;
   onSaved: () => void;
 }
 
-export function DoctorForm({ initialValue, onCancel, onSaved }: DoctorFormProps): React.JSX.Element {
-  const [values, setValues] = useState<DoctorInput>(toFormValues(initialValue));
+export function StaffForm({ initialValue, onCancel, onSaved }: StaffFormProps): React.JSX.Element {
+  const [values, setValues] = useState<StaffMemberInput>(toFormValues(initialValue));
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [serverError, setServerError] = useState<string | null>(null);
   const [isUploadingImage, setIsUploadingImage] = useState<boolean>(false);
@@ -50,7 +50,7 @@ export function DoctorForm({ initialValue, onCancel, onSaved }: DoctorFormProps)
     setIsUploadingImage(true);
     setUploadError(null);
     try {
-      const response = await uploadDoctorImage(file);
+      const response = await uploadStaffImage(file);
       if (response.success && response.data) {
         const uploadedUrl = response.data.url;
         setValues((prev) => ({ ...prev, imageUrl: uploadedUrl }));
@@ -71,15 +71,15 @@ export function DoctorForm({ initialValue, onCancel, onSaved }: DoctorFormProps)
     setServerError(null);
     try {
       const response = initialValue
-        ? await updateDoctor(initialValue._id, values)
-        : await createDoctor(values);
+        ? await updateStaffMember(initialValue._id, values)
+        : await createStaffMember(values);
       if (response.success) {
         onSaved();
       } else {
         setServerError(response.error ?? "Something went wrong. Please try again.");
       }
     } catch {
-      setServerError("We couldn't save this doctor. Please check your connection.");
+      setServerError("We couldn't save this staff member. Please check your connection.");
     } finally {
       setIsSubmitting(false);
     }
@@ -102,15 +102,16 @@ export function DoctorForm({ initialValue, onCancel, onSaved }: DoctorFormProps)
       </div>
 
       <div>
-        <label htmlFor="specialization" className={LABEL_CLASSES}>
-          Specialization
+        <label htmlFor="role" className={LABEL_CLASSES}>
+          Role
         </label>
         <input
-          id="specialization"
+          id="role"
           type="text"
           required
-          value={values.specialization}
-          onChange={(event) => setValues((prev) => ({ ...prev, specialization: event.target.value }))}
+          placeholder="e.g. Cardiologist, Head Nurse, Administrative Officer"
+          value={values.role}
+          onChange={(event) => setValues((prev) => ({ ...prev, role: event.target.value }))}
           className={INPUT_CLASSES}
         />
       </div>
@@ -136,7 +137,7 @@ export function DoctorForm({ initialValue, onCancel, onSaved }: DoctorFormProps)
           {values.imageUrl ? (
             <img
               src={values.imageUrl}
-              alt="Doctor portrait preview"
+              alt="Staff portrait preview"
               className="h-20 w-20 shrink-0 rounded-lg object-cover"
             />
           ) : (

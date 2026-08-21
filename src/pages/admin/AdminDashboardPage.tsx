@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Bell, Briefcase, SlidersHorizontal, Star, Stethoscope, UserRound } from "lucide-react";
+import { Bell, Briefcase, SlidersHorizontal, Star, Stethoscope, Users } from "lucide-react";
 
 const DASHBOARD_SECTIONS = [
   {
@@ -9,10 +9,10 @@ const DASHBOARD_SECTIONS = [
     icon: Bell,
   },
   {
-    path: "/admin/doctors",
-    label: "Doctors",
-    description: "Manage the doctor directory and schedules.",
-    icon: UserRound,
+    path: "/admin/staff",
+    label: "Staff",
+    description: "Manage doctors, nurses, and other hospital staff.",
+    icon: Users,
   },
   {
     path: "/admin/services",

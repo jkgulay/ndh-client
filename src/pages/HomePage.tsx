@@ -1,10 +1,10 @@
 import { AboutSnapshot } from "../components/AboutSnapshot/AboutSnapshot";
 import { AnnouncementsBanner } from "../components/AnnouncementsBanner/AnnouncementsBanner";
 import { CtaStrip } from "../components/CtaStrip/CtaStrip";
-import { DoctorsShowcase } from "../components/DoctorsShowcase/DoctorsShowcase";
 import { FeedbackSection } from "../components/FeedbackSection/FeedbackSection";
 import { HeroSection } from "../components/HeroSection/HeroSection";
 import { ServiceHighlights } from "../components/ServiceHighlights/ServiceHighlights";
+import { StaffShowcase } from "../components/StaffShowcase/StaffShowcase";
 import { ErrorState } from "../components/common/ErrorState";
 import { LoadingState } from "../components/common/LoadingState";
 import { useHospitalInfo } from "../hooks/useHospitalInfo";
@@ -26,7 +26,7 @@ export function HomePage(): React.JSX.Element {
       <AboutSnapshot hospitalInfo={hospitalInfo} />
       <ServiceHighlights />
       <AnnouncementsBanner />
-      <DoctorsShowcase />
+      <StaffShowcase />
       <FeedbackSection />
       <CtaStrip hospitalInfo={hospitalInfo} />
     </>

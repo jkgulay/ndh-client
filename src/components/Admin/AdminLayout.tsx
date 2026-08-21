@@ -5,7 +5,7 @@ import { useAdminAuth } from "../../hooks/useAdminAuth";
 const ADMIN_NAV_LINKS = [
   { path: "/admin", label: "Dashboard" },
   { path: "/admin/announcements", label: "Announcements" },
-  { path: "/admin/doctors", label: "Doctors" },
+  { path: "/admin/staff", label: "Staff" },
   { path: "/admin/services", label: "Services" },
   { path: "/admin/careers", label: "Careers" },
   { path: "/admin/feedback", label: "Feedback" },

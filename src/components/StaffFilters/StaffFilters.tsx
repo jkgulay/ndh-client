@@ -1,20 +1,20 @@
 import { Search } from "lucide-react";
 
-interface DoctorFiltersProps {
+interface StaffFiltersProps {
   searchTerm: string;
   onSearchChange: (value: string) => void;
-  specializations: string[];
-  selectedSpecialization: string;
-  onSpecializationChange: (value: string) => void;
+  roles: string[];
+  selectedRole: string;
+  onRoleChange: (value: string) => void;
 }
 
-export function DoctorFilters({
+export function StaffFilters({
   searchTerm,
   onSearchChange,
-  specializations,
-  selectedSpecialization,
-  onSpecializationChange,
-}: DoctorFiltersProps): React.JSX.Element {
+  roles,
+  selectedRole,
+  onRoleChange,
+}: StaffFiltersProps): React.JSX.Element {
   return (
     <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
       <div className="relative flex-1">
@@ -23,24 +23,24 @@ export function DoctorFilters({
           type="search"
           value={searchTerm}
           onChange={(event) => onSearchChange(event.target.value)}
-          placeholder="Search doctors by name"
-          aria-label="Search doctors by name"
+          placeholder="Search staff by name"
+          aria-label="Search staff by name"
           className="w-full rounded-lg border border-slate-300 py-2.5 pl-10 pr-4 focus:border-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-200"
         />
       </div>
 
-      <label className="sr-only" htmlFor="specialization-filter">
-        Filter by specialization
+      <label className="sr-only" htmlFor="role-filter">
+        Filter by role
       </label>
       <select
-        id="specialization-filter"
-        value={selectedSpecialization}
-        onChange={(event) => onSpecializationChange(event.target.value)}
+        id="role-filter"
+        value={selectedRole}
+        onChange={(event) => onRoleChange(event.target.value)}
         className="rounded-lg border border-slate-300 px-4 py-2.5 focus:border-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-200 sm:w-64"
       >
-        {specializations.map((specialization) => (
-          <option key={specialization} value={specialization}>
-            {specialization}
+        {roles.map((role) => (
+          <option key={role} value={role}>
+            {role}
           </option>
         ))}
       </select>

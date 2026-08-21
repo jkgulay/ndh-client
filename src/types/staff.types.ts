@@ -1,7 +1,7 @@
-export interface Doctor {
+export interface StaffMember {
   _id: string;
   name: string;
-  specialization: string;
+  role: string;
   schedule: string;
   imageUrl?: string;
   bio?: string;

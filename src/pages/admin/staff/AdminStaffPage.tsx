@@ -5,14 +5,14 @@ import { DataTable, type DataTableColumn } from "../../../components/Admin/DataT
 import { Modal } from "../../../components/Admin/Modal";
 import { ErrorState } from "../../../components/common/ErrorState";
 import { LoadingState } from "../../../components/common/LoadingState";
-import { deleteDoctor, fetchAllDoctorsForAdmin } from "../../../api/doctorsApi";
+import { deleteStaffMember, fetchAllStaffForAdmin } from "../../../api/staffApi";
 import { useFetch } from "../../../hooks/useFetch";
-import type { Doctor } from "../../../types/doctor.types";
-import { DoctorForm } from "./DoctorForm";
+import type { StaffMember } from "../../../types/staff.types";
+import { StaffForm } from "./StaffForm";
 
-const COLUMNS: DataTableColumn<Doctor>[] = [
+const COLUMNS: DataTableColumn<StaffMember>[] = [
   { header: "Name", render: (item) => <span className="font-medium text-slate-800">{item.name}</span> },
-  { header: "Specialization", render: (item) => item.specialization },
+  { header: "Role", render: (item) => item.role },
   { header: "Schedule", render: (item) => item.schedule },
   {
     header: "Status",
@@ -28,10 +28,10 @@ const COLUMNS: DataTableColumn<Doctor>[] = [
   },
 ];
 
-export function AdminDoctorsPage(): React.JSX.Element {
-  const { data: doctors, isLoading, error, refetch } = useFetch(fetchAllDoctorsForAdmin);
-  const [editingItem, setEditingItem] = useState<Doctor | null | "new">(null);
-  const [deletingItem, setDeletingItem] = useState<Doctor | null>(null);
+export function AdminStaffPage(): React.JSX.Element {
+  const { data: staff, isLoading, error, refetch } = useFetch(fetchAllStaffForAdmin);
+  const [editingItem, setEditingItem] = useState<StaffMember | null | "new">(null);
+  const [deletingItem, setDeletingItem] = useState<StaffMember | null>(null);
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
 
@@ -40,12 +40,12 @@ export function AdminDoctorsPage(): React.JSX.Element {
     setIsDeleting(true);
     setDeleteError(null);
     try {
-      const response = await deleteDoctor(deletingItem._id);
+      const response = await deleteStaffMember(deletingItem._id);
       if (response.success) {
         setDeletingItem(null);
         refetch();
       } else {
-        setDeleteError(response.error ?? "Unable to delete this doctor.");
+        setDeleteError(response.error ?? "Unable to delete this staff member.");
       }
     } catch {
       setDeleteError("We couldn't reach the server. Please try again.");
@@ -57,7 +57,7 @@ export function AdminDoctorsPage(): React.JSX.Element {
   return (
     <div>
       <div className="mb-6 flex items-center justify-between gap-3">
-        <h1 className="text-2xl font-bold text-primary-900">Doctors</h1>
+        <h1 className="text-2xl font-bold text-primary-900">Staff</h1>
         <button
           type="button"
           onClick={() => setEditingItem("new")}
@@ -68,22 +68,22 @@ export function AdminDoctorsPage(): React.JSX.Element {
         </button>
       </div>
 
-      {isLoading && <LoadingState label="Loading doctors…" />}
+      {isLoading && <LoadingState label="Loading staff…" />}
       {!isLoading && error && <ErrorState message={error} />}
       {!isLoading && !error && (
         <DataTable
-          items={doctors ?? []}
+          items={staff ?? []}
           columns={COLUMNS}
           getRowKey={(item) => item._id}
           onEdit={setEditingItem}
           onDelete={setDeletingItem}
-          emptyMessage="No doctors yet. Add the first one."
+          emptyMessage="No staff yet. Add the first one."
         />
       )}
 
       {editingItem && (
-        <Modal title={editingItem === "new" ? "Add Doctor" : "Edit Doctor"} onClose={() => setEditingItem(null)}>
-          <DoctorForm
+        <Modal title={editingItem === "new" ? "Add Staff Member" : "Edit Staff Member"} onClose={() => setEditingItem(null)}>
+          <StaffForm
             initialValue={editingItem === "new" ? null : editingItem}
             onCancel={() => setEditingItem(null)}
             onSaved={() => {
