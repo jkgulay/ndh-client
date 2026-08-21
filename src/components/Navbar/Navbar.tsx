@@ -32,7 +32,7 @@ export function Navbar(): React.JSX.Element {
         isScrolled ? "shadow-md" : "border-b border-slate-100"
       }`}
     >
-      <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:gap-8 lg:px-8">
+      <div className="mx-auto flex w-full max-w-[1400px] items-center justify-between gap-3 px-4 py-3 sm:px-8 lg:gap-8 lg:px-12">
         <NavLink to="/" className="flex shrink-0 items-center gap-2 text-primary-900">
           <img src="/components/naslogo.png" alt="Nasipit District Hospital logo" className="h-11 w-11 object-contain" />
           <span className="text-sm font-extrabold tracking-tight sm:text-base lg:text-lg">{hospitalName}</span>

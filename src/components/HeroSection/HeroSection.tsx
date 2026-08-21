@@ -1,4 +1,4 @@
-import { ArrowRight, CalendarCheck, ChevronRight, Clock3, HeartPulse, Maximize2, MapPin, ShieldCheck, Stethoscope } from "lucide-react";
+import { ArrowRight, CalendarCheck, ChevronRight, Clock3, Maximize2, MapPin, ShieldCheck } from "lucide-react";
 import gsap from "gsap";
 import { useLayoutEffect, useRef } from "react";
 import { Link } from "react-router-dom";
@@ -8,13 +8,6 @@ interface HeroSectionProps {
   hospitalName: string;
   tagline: string;
 }
-
-const FEATURES = [
-  [Stethoscope, "Expert doctors", "Experienced professionals who listen first."],
-  [HeartPulse, "Advanced care", "Modern facilities for confident treatment."],
-  [Clock3, "24/7 services", "Emergency support whenever you need it."],
-  [ShieldCheck, "Patient-first", "Thoughtful care for every family."],
-] as const;
 
 const STATS = [
   ["25+", "Years of care"],
@@ -38,7 +31,7 @@ export function HeroSection({ hospitalName, tagline }: HeroSectionProps): React.
 
   return (
     <section ref={sectionRef} className="overflow-hidden bg-[#eef7ff]">
-      <div className="mx-auto grid w-full max-w-7xl items-center gap-10 px-4 pb-8 pt-12 sm:px-6 sm:pb-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16 lg:px-8 lg:pb-12 lg:pt-20">
+      <div className="mx-auto grid w-full max-w-[1400px] items-center gap-10 px-4 pb-8 pt-12 sm:px-8 sm:pb-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16 lg:px-12 lg:pb-12 lg:pt-20">
         <div className="relative z-10">
           <p className="hero-reveal mb-5 flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.2em] text-accent-600">
             <span className="h-2 w-2 rounded-full bg-accent-500" /> Welcome to {hospitalName}
@@ -84,19 +77,10 @@ export function HeroSection({ hospitalName, tagline }: HeroSectionProps): React.
         </div>
       </div>
 
-      <div ref={belowFoldRef} className="relative z-20 mx-auto -mt-10 max-w-6xl px-4 sm:-mt-14 sm:px-6 lg:-mt-16 lg:px-8">
-        <div className="reveal-item grid grid-cols-2 gap-6 rounded-3xl border border-primary-100 bg-white p-6 shadow-2xl shadow-primary-900/10 sm:grid-cols-4 sm:gap-4 sm:divide-x sm:divide-primary-100 sm:p-8">
-          {FEATURES.map(([Icon, title, description]) => (
-            <div key={title} className="flex items-start gap-3 sm:pl-6 sm:first:pl-0">
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary-50 text-primary-700"><Icon className="h-5 w-5" aria-hidden="true" /></span>
-              <div><p className="text-sm font-extrabold text-primary-950">{title}</p><p className="mt-1 text-xs leading-5 text-slate-500">{description}</p></div>
-            </div>
-          ))}
-        </div>
-
-        <div className="reveal-item mt-6 grid grid-cols-2 divide-x divide-primary-100 rounded-2xl border border-primary-100 bg-white sm:grid-cols-4">
+      <div ref={belowFoldRef} className="relative z-20 mx-auto -mt-10 max-w-[1400px] px-4 sm:-mt-14 sm:px-8 lg:-mt-16 lg:px-12">
+        <div className="reveal-item grid grid-cols-2 divide-x divide-primary-100 overflow-hidden rounded-3xl border border-primary-100 bg-white shadow-2xl shadow-primary-900/10 sm:grid-cols-4">
           {STATS.map(([value, label]) => (
-            <div key={label} className="px-3 py-5 text-center sm:py-6">
+            <div key={label} className="px-3 py-6 text-center sm:py-8">
               <p className="text-xl font-extrabold text-primary-800 sm:text-2xl">{value}</p>
               <p className="mt-1 text-[10px] font-bold uppercase tracking-wider text-slate-500 sm:text-xs">{label}</p>
             </div>
@@ -104,7 +88,7 @@ export function HeroSection({ hospitalName, tagline }: HeroSectionProps): React.
         </div>
       </div>
 
-      <div className="h-10 sm:h-14 lg:h-16" aria-hidden="true" />
+      <div className="h-8 sm:h-10 lg:h-12" aria-hidden="true" />
     </section>
   );
 }
