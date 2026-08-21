@@ -36,10 +36,10 @@ export function AboutSnapshot({ hospitalInfo }: AboutSnapshotProps): React.JSX.E
     <section className="bg-white py-16 sm:py-24">
       <Container>
         <div ref={containerRef} className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
-          <div className="reveal-item relative order-2 lg:order-1">
+          <div className="reveal-item relative order-2">
             <span
               aria-hidden="true"
-              className="absolute -left-6 -top-6 hidden h-32 w-32 rounded-full bg-surface-tint sm:block"
+              className="absolute -right-6 -top-6 hidden h-32 w-32 rounded-full bg-surface-tint sm:block"
             />
             <div className="relative overflow-hidden rounded-[2.5rem] shadow-xl shadow-primary-900/10">
               <img
@@ -50,11 +50,11 @@ export function AboutSnapshot({ hospitalInfo }: AboutSnapshotProps): React.JSX.E
             </div>
             <span
               aria-hidden="true"
-              className="absolute -right-4 -bottom-4 hidden h-24 w-24 rounded-full border-4 border-white bg-accent-200/70 sm:block"
+              className="absolute -left-4 -bottom-4 hidden h-24 w-24 rounded-full border-4 border-white bg-accent-200/70 sm:block"
             />
           </div>
 
-          <div className="order-1 text-left lg:order-2">
+          <div className="order-1 text-left">
             <p className="reveal-item mb-4 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.25em] text-accent-600">
               <span className="h-1.5 w-1.5 rounded-full bg-accent-500" /> {t("aboutSnapshot.eyebrow")}
             </p>
