@@ -127,6 +127,11 @@ const en = {
     title: "Announcements",
     description: "Stay up to date with hospital news, advisories, and events.",
   },
+  announcementsPage: {
+    featuredBadge: "Latest Update",
+    latestHeading: "Latest",
+    moreHeading: "More Announcements",
+  },
   pageHeroContact: { title: "Contact Us", description: "We're here to help. Reach out with any questions or concerns." },
   aboutPage: {
     missionTitle: "Our Mission",
@@ -327,6 +332,11 @@ const fil: typeof en = {
   pageHeroAnnouncements: {
     title: "Mga Anunsyo",
     description: "Manatiling updated sa balita, abiso, at mga kaganapan ng ospital.",
+  },
+  announcementsPage: {
+    featuredBadge: "Pinakabagong Balita",
+    latestHeading: "Pinakabago",
+    moreHeading: "Iba Pang Anunsyo",
   },
   pageHeroContact: { title: "Makipag-ugnayan", description: "Narito kami upang tumulong. Makipag-ugnayan sa anumang tanong o alalahanin." },
   aboutPage: {
